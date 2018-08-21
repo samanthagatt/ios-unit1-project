@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8md-8U-zW2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vBq-ne-Cra">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Onboarding View Controller-->
+        <scene sceneID="gkh-xD-3Th">
+            <objects>
+                <viewController id="vBq-ne-Cra" customClass="OnboardingViewController" customModule="Bookshelves" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="feF-w3-DRO">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ftD-Fi-8IB">
+                                <rect key="frame" x="108" y="318" width="160" height="30"/>
+                                <state key="normal" title="Sign into Google Books"/>
+                                <connections>
+                                    <action selector="signIn:" destination="vBq-ne-Cra" eventType="touchUpInside" id="mp7-oO-BMJ"/>
+                                    <segue destination="8md-8U-zW2" kind="presentation" identifier="PresentTabController" id="EQk-nH-kIn"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ftD-Fi-8IB" firstAttribute="centerY" secondItem="feF-w3-DRO" secondAttribute="centerY" id="Clo-QI-aW5"/>
+                            <constraint firstItem="ftD-Fi-8IB" firstAttribute="centerX" secondItem="feF-w3-DRO" secondAttribute="centerX" id="bMs-TZ-KYc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Smg-PW-kUA"/>
+                    </view>
+                    <connections>
+                        <outlet property="button" destination="ftD-Fi-8IB" id="SFJ-g4-Lib"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5TM-N8-92K" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1692" y="81"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vcj-IC-QYM">
             <objects>

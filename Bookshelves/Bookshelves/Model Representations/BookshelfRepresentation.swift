@@ -12,3 +12,24 @@ struct BookshelfRepresentation: Decodable, Equatable {
     let id: Int16
     var title: String
 }
+
+
+// MARK: - Equatable to core data Bookshelf
+
+func == (lhs: BookshelfRepresentation, rhs: Bookshelf) -> Bool {
+    return
+        lhs.id == rhs.id &&
+            lhs.title == rhs.title
+}
+
+func == (lhs: Bookshelf, rhs: BookshelfRepresentation) -> Bool {
+    return rhs == lhs
+}
+
+func != (lhs: BookshelfRepresentation, rhs: Bookshelf) -> Bool {
+    return !(rhs == lhs)
+}
+
+func != (lhs: Bookshelf, rhs: BookshelfRepresentation) -> Bool {
+    return rhs != lhs
+}
