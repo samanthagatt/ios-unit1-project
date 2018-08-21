@@ -15,6 +15,7 @@
         <relationship name="volume" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Volume" inverseName="review" inverseEntity="Volume" syncable="YES"/>
     </entity>
     <entity name="Volume" representedClassName="Volume" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="String" syncable="YES"/>
         <attribute name="summary" attributeType="String" syncable="YES"/>
         <relationship name="bookshelves" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bookshelf" inverseName="volumes" inverseEntity="Bookshelf" syncable="YES"/>
         <relationship name="imageStrings" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ImageStrings" inverseName="volume" inverseEntity="ImageStrings" syncable="YES"/>
@@ -28,7 +29,7 @@
     </entity>
     <elements>
         <element name="Bookshelf" positionX="252" positionY="-234" width="128" height="73"/>
-        <element name="Volume" positionX="-0" positionY="-261" width="128" height="118"/>
+        <element name="Volume" positionX="-0" positionY="-261" width="128" height="133"/>
         <element name="Review" positionX="-180" positionY="-234" width="128" height="90"/>
         <element name="VolumeInfo" positionX="-2" positionY="-72" width="128" height="88"/>
         <element name="ImageStrings" positionX="45" positionY="-90" width="128" height="90"/>

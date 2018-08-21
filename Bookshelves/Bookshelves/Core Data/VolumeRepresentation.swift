@@ -10,12 +10,16 @@ import Foundation
 
 struct VolumeRepresentation: Decodable, Equatable {
     
+    let id: String
+    
     let volumeInfo: VolumeInfo
     
+    // Won't have summary in search results
+    let summary: String?
     
-    let summary: String
-    
-    let imageStrings: ImageStrings
+    // Will every book have image strings?
+    // Won't have image strings in search results
+    let imageStrings: ImageStrings?
     
     var review: Review?
     
@@ -25,6 +29,7 @@ struct VolumeRepresentation: Decodable, Equatable {
     }
     
     enum CodingKeys: String, CodingKey {
+        case id
         case volumeInfo
         case summary = "description"
         case imageStrings = "imageLinks"
@@ -67,14 +72,13 @@ struct VolumeRepresentation: Decodable, Equatable {
 
 func == (lhs: VolumeRepresentation, rhs: Volume) -> Bool {
     return
-        // Why is it making me force unwrap everything only sometimes???
         lhs.volumeInfo.title == rhs.volumeInfo?.title &&
             lhs.volumeInfo.authors == rhs.volumeInfo?.authors &&
             lhs.summary == rhs.summary &&
             lhs.review?.rating == rhs.review?.rating &&
             lhs.review?.string == rhs.review?.string &&
-            lhs.imageStrings.thumbnailString == rhs.imageStrings?.thumbnailString &&
-            lhs.imageStrings.imageString == rhs.imageStrings?.imageString
+            lhs.imageStrings?.thumbnailString == rhs.imageStrings?.thumbnailString &&
+            lhs.imageStrings?.imageString == rhs.imageStrings?.imageString
 }
 
 func == (lhs: Volume, rhs: VolumeRepresentation) -> Bool {
@@ -88,3 +92,20 @@ func != (lhs: VolumeRepresentation, rhs: Volume) -> Bool {
 func != (lhs: Volume, rhs: VolumeRepresentation) -> Bool {
     return rhs != lhs
 }
+
+
+// MARK: - Volume object outline
+/*
+ Volume
+    id
+    volumeInfo
+        title
+        authors
+    summary
+    imageStrings?
+        thumbnailString?
+        imageString?
+    review?
+        rating?
+        string?
+ */
