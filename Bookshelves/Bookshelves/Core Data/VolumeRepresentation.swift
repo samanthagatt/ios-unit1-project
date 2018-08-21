@@ -14,18 +14,21 @@ struct VolumeRepresentation: Decodable, Equatable {
     let title: VolumeInfo
     let authors: VolumeInfo
     
-    let description: String
+    let summary: String
     
     // May or may not work?
     let imageStrings: ImageStrings
     
+    var review: Review?
+    
     enum CodingKeys: String, CodingKey {
         
         // Will this work since the actual title and authors are in the struct VolumeInfo?
+        // Might have to make them optional
         case title
         case authors
         
-        case description
+        case summary = "description"
         case imageStrings = "imageLinks"
     }
     
@@ -50,5 +53,11 @@ struct VolumeRepresentation: Decodable, Equatable {
             case thumbnailString = "thumbnail"
             case imageString = "medium"
         }
+    }
+    
+    struct Review: Decodable, Equatable {
+        // does this have to be Int16?
+        var rating: Int?
+        var string: String?
     }
 }

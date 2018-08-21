@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Author" representedClassName="Author" syncable="YES" codeGenerationType="class">
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="volumes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Volume" inverseName="authors" inverseEntity="Volume" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="volumes" toMany="YES" deletionRule="Nullify" destinationEntity="Volume" inverseName="authors" inverseEntity="Volume" syncable="YES"/>
     </entity>
-    <entity name="Bookshelf" representedClassName="Bookshelf" syncable="YES" codeGenerationType="class"/>
-    <entity name="Volume" representedClassName="Volume" syncable="YES" codeGenerationType="class">
+    <entity name="Bookshelf" representedClassName="Bookshelf" syncable="YES" codeGenerationType="class">
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="authors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Author" inverseName="volumes" inverseEntity="Author" syncable="YES"/>
+        <relationship name="volumes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Volume" inverseName="bookshelves" inverseEntity="Volume" syncable="YES"/>
+    </entity>
+    <entity name="Review" representedClassName="Review" syncable="YES" codeGenerationType="class">
+        <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="string" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="volume" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Volume" inverseName="review" inverseEntity="Volume" syncable="YES"/>
+    </entity>
+    <entity name="Volume" representedClassName="Volume" syncable="YES" codeGenerationType="class">
+        <attribute name="summary" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="authors" toMany="YES" deletionRule="Nullify" destinationEntity="Author" inverseName="volumes" inverseEntity="Author" syncable="YES"/>
+        <relationship name="bookshelves" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bookshelf" inverseName="volumes" inverseEntity="Bookshelf" syncable="YES"/>
+        <relationship name="review" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Review" inverseName="volume" inverseEntity="Review" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Volume" positionX="-63" positionY="-18" width="128" height="75"/>
-        <element name="Bookshelf" positionX="-45" positionY="0" width="128" height="45"/>
-        <element name="Author" positionX="-27" positionY="27" width="128" height="75"/>
+        <element name="Bookshelf" positionX="-27" positionY="18" width="128" height="75"/>
+        <element name="Volume" positionX="18" positionY="63" width="128" height="120"/>
+        <element name="Author" positionX="54" positionY="99" width="128" height="75"/>
+        <element name="Review" positionX="18" positionY="81" width="128" height="90"/>
     </elements>
 </model>
