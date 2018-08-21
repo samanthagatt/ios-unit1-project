@@ -8,7 +8,7 @@
     <entity name="ImageStrings" representedClassName="ImageStrings" syncable="YES" codeGenerationType="class">
         <attribute name="imageString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbnailString" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="volume" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Volume" inverseName="imageStrings" inverseEntity="Volume" syncable="YES"/>
+        <relationship name="volumeInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VolumeInfo" inverseName="imageStrings" inverseEntity="VolumeInfo" syncable="YES"/>
     </entity>
     <entity name="Review" representedClassName="Review" syncable="YES" codeGenerationType="class">
         <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -18,22 +18,22 @@
     <entity name="Volume" representedClassName="Volume" syncable="YES" codeGenerationType="class">
         <attribute name="hasRead" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="id" attributeType="String" syncable="YES"/>
-        <attribute name="summary" attributeType="String" syncable="YES"/>
         <relationship name="bookshelves" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bookshelf" inverseName="volumes" inverseEntity="Bookshelf" syncable="YES"/>
-        <relationship name="imageStrings" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ImageStrings" inverseName="volume" inverseEntity="ImageStrings" syncable="YES"/>
         <relationship name="review" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Review" inverseName="volume" inverseEntity="Review" syncable="YES"/>
         <relationship name="volumeInfo" maxCount="1" deletionRule="Nullify" destinationEntity="VolumeInfo" inverseName="volume" inverseEntity="VolumeInfo" syncable="YES"/>
     </entity>
     <entity name="VolumeInfo" representedClassName="VolumeInfo" syncable="YES" codeGenerationType="class">
         <attribute name="authors" attributeType="String" syncable="YES"/>
+        <attribute name="summary" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="volume" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Volume" inverseName="volumeInfo" inverseEntity="Volume" syncable="YES"/>
+        <relationship name="imageStrings" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ImageStrings" inverseName="volumeInfo" inverseEntity="ImageStrings" syncable="YES"/>
+        <relationship name="volume" maxCount="1" deletionRule="Nullify" destinationEntity="Volume" inverseName="volumeInfo" inverseEntity="Volume" syncable="YES"/>
     </entity>
     <elements>
         <element name="Bookshelf" positionX="252" positionY="-234" width="128" height="90"/>
         <element name="ImageStrings" positionX="45" positionY="-90" width="128" height="90"/>
         <element name="Review" positionX="-180" positionY="-234" width="128" height="90"/>
-        <element name="Volume" positionX="-0" positionY="-261" width="128" height="150"/>
-        <element name="VolumeInfo" positionX="-2" positionY="-72" width="128" height="88"/>
+        <element name="Volume" positionX="-0" positionY="-261" width="128" height="120"/>
+        <element name="VolumeInfo" positionX="-2" positionY="-72" width="128" height="120"/>
     </elements>
 </model>

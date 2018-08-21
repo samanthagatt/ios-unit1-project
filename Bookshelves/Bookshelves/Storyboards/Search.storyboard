@@ -24,6 +24,9 @@
                                 <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="N63-2g-MSC">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="0OB-zk-Izv" id="Jn5-n0-HFa"/>
+                                    </connections>
                                 </searchBar>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -69,6 +72,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Search" id="hZF-mX-CMj"/>
+                    <connections>
+                        <outlet property="searchBar" destination="N63-2g-MSC" id="oWU-4s-7FN"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SRd-eY-z5T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

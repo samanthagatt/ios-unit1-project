@@ -79,6 +79,7 @@ class VolumeController {
             }
             
             request = authorizedRequest
+            print(request)
         }
         
         URLSession.shared.dataTask(with: request) { (data, _, error) in
@@ -95,7 +96,9 @@ class VolumeController {
             }
             
             do {
-                let volumes = try JSONDecoder().decode([VolumeRepresentation].self, from: data)
+                // System group container for systemgroup.com.apple.configurationprofiles path is /private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles
+                let volumeDict = try JSONDecoder().decode(Base.self, from: data)
+                let volumes = volumeDict.items
                 completion(volumes, nil)
             } catch {
                 NSLog("Error decoding data: \(error)")

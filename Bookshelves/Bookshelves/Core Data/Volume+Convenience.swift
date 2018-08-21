@@ -15,14 +15,15 @@ extension Volume {
         self.id = id
         self.volumeInfo?.title = title
         self.volumeInfo?.authors = authors
-        self.summary = summary
-        self.imageStrings?.thumbnailString = thumbnailString
-        self.imageStrings?.imageString = imageString
+        self.volumeInfo?.summary = summary
+        self.volumeInfo?.imageStrings?.thumbnailString = thumbnailString
+        self.volumeInfo?.imageStrings?.imageString = imageString
         self.hasRead = hasRead
         // When it's first being initialized it won't have a review (the user makes that later)
     }
     
     convenience init?(volumeRep: VolumeRepresentation, context: NSManagedObjectContext) {
-        self.init(id: volumeRep.id, title: volumeRep.volumeInfo.title, authors: volumeRep.volumeInfo.authors, summary: volumeRep.summary, thumbnailString: volumeRep.imageStrings?.thumbnailString, imageString: volumeRep.imageStrings?.imageString, context: context)
+        
+        self.init(id: volumeRep.id, title: volumeRep.volumeInfo.title, authors: volumeRep.volumeInfo.authors, summary: volumeRep.volumeInfo.summary, thumbnailString: volumeRep.volumeInfo.imageStrings?.thumbnailString, imageString: volumeRep.volumeInfo.imageStrings?.imageString, context: context)
     }
 }

@@ -8,20 +8,15 @@
 
 import Foundation
 
+struct Base: Decodable, Equatable {
+    let items: [VolumeRepresentation]
+}
+
 struct VolumeRepresentation: Decodable, Equatable {
     
     let id: String
-    
     let volumeInfo: VolumeInfo
-    
-    // Won't have summary in search results
-    let summary: String?
-    
-    // Won't have image strings in search results
-    let imageStrings: ImageStrings?
-    
     var review: Review?
-    
     // Have to set hasRead to false before comparing to Volume object since Volume's hasRead will never be nil
     var hasRead: Bool?
     
@@ -30,19 +25,11 @@ struct VolumeRepresentation: Decodable, Equatable {
         var string: String?
     }
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case volumeInfo
-        case summary = "description"
-        case imageStrings = "imageLinks"
-    }
-    
-    
-    // MARK: - JSON parsing
-    
     struct VolumeInfo: Decodable, Equatable {
         let title: String
         let authorsArray: [String]
+        let summary: String
+        let imageStrings: ImageStrings?
         
         var authors: String {
             var scratch = ""
@@ -52,21 +39,24 @@ struct VolumeRepresentation: Decodable, Equatable {
             return scratch
         }
         
+        struct ImageStrings: Decodable, Equatable {
+            let thumbnailString: String?
+            let imageString: String?
+            
+            enum CodingKeys: String, CodingKey {
+                case thumbnailString = "thumbnail"
+                case imageString = "medium"
+            }
+        }
+        
         enum CodingKeys: String, CodingKey {
             case title
             case authorsArray = "authors"
+            case summary = "description"
+            case imageStrings = "imageLinks"
         }
     }
     
-    struct ImageStrings: Decodable, Equatable {
-        let thumbnailString: String?
-        let imageString: String?
-        
-        enum CodingKeys: String, CodingKey {
-            case thumbnailString = "thumbnail"
-            case imageString = "medium"
-        }
-    }
 }
 
 
@@ -76,11 +66,11 @@ func == (lhs: VolumeRepresentation, rhs: Volume) -> Bool {
     return
         lhs.volumeInfo.title == rhs.volumeInfo?.title &&
             lhs.volumeInfo.authors == rhs.volumeInfo?.authors &&
-            lhs.summary == rhs.summary &&
+            lhs.volumeInfo.summary == rhs.volumeInfo?.summary &&
             lhs.review?.rating == rhs.review?.rating &&
             lhs.review?.string == rhs.review?.string &&
-            lhs.imageStrings?.thumbnailString == rhs.imageStrings?.thumbnailString &&
-            lhs.imageStrings?.imageString == rhs.imageStrings?.imageString &&
+            lhs.volumeInfo.imageStrings?.thumbnailString == rhs.volumeInfo?.imageStrings?.thumbnailString &&
+            lhs.volumeInfo.imageStrings?.imageString == rhs.volumeInfo?.imageStrings?.imageString &&
             lhs.hasRead == rhs.hasRead
 }
 
