@@ -20,6 +20,15 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    @IBAction func requestAuth(_ sender: Any) {
+        GoogleBooksAuthorizationClient.shared.authorizeIfNeeded(presenter: self) { (error) in
+            if let error = error {
+                NSLog("Error requesting authorization: \(error)")
+                return
+            }
+            print("access granted :)")
+        }
+    }
+    
 }
 
