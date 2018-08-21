@@ -12,6 +12,7 @@ struct VolumeRepresentation: Decodable, Equatable {
     
     let volumeInfo: VolumeInfo
     
+    
     let summary: String
     
     let imageStrings: ImageStrings
@@ -34,11 +35,19 @@ struct VolumeRepresentation: Decodable, Equatable {
     
     struct VolumeInfo: Decodable, Equatable {
         let title: String
-        let authors: [String]
+        let authorsArray: [String]
+        
+        var authors: String {
+            var scratch = ""
+            for author in self.authorsArray {
+                scratch += author
+            }
+            return scratch
+        }
         
         enum CodingKeys: String, CodingKey {
             case title
-            case authors
+            case authorsArray = "authors"
         }
     }
     
@@ -60,11 +69,7 @@ func == (lhs: VolumeRepresentation, rhs: Volume) -> Bool {
     return
         // Why is it making me force unwrap everything only sometimes???
         lhs.volumeInfo.title == rhs.volumeInfo?.title &&
-        // Don't think this will work
-        // Need to get an array of all the authors' name variables
-        // Will the authors always be in the same order?
-        // Maybe something like rhs.volumeInfo!.authors.map {$0.name}
-            lhs.volumeInfo.authors == rhs.volumeInfo?.authors?.allObjects as? [String] &&
+            lhs.volumeInfo.authors == rhs.volumeInfo?.authors &&
             lhs.summary == rhs.summary &&
             lhs.review?.rating == rhs.review?.rating &&
             lhs.review?.string == rhs.review?.string &&

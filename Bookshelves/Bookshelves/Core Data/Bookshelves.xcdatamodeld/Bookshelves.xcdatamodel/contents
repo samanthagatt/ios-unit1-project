@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Author" representedClassName="Author" syncable="YES" codeGenerationType="class">
-        <attribute name="name" attributeType="String" syncable="YES"/>
-        <relationship name="volumeInfo" toMany="YES" deletionRule="Nullify" destinationEntity="VolumeInfo" inverseName="authors" inverseEntity="VolumeInfo" syncable="YES"/>
-    </entity>
     <entity name="Bookshelf" representedClassName="Bookshelf" syncable="YES" codeGenerationType="class">
         <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="volumes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Volume" inverseName="bookshelves" inverseEntity="Volume" syncable="YES"/>
@@ -26,16 +22,15 @@
         <relationship name="volumeInfo" maxCount="1" deletionRule="Nullify" destinationEntity="VolumeInfo" inverseName="volume" inverseEntity="VolumeInfo" syncable="YES"/>
     </entity>
     <entity name="VolumeInfo" representedClassName="VolumeInfo" syncable="YES" codeGenerationType="class">
+        <attribute name="authors" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="authors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Author" inverseName="volumeInfo" inverseEntity="Author" syncable="YES"/>
         <relationship name="volume" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Volume" inverseName="volumeInfo" inverseEntity="Volume" syncable="YES"/>
     </entity>
     <elements>
         <element name="Bookshelf" positionX="252" positionY="-234" width="128" height="73"/>
         <element name="Volume" positionX="-0" positionY="-261" width="128" height="118"/>
-        <element name="Author" positionX="-0" positionY="107" width="128" height="73"/>
         <element name="Review" positionX="-180" positionY="-234" width="128" height="90"/>
-        <element name="VolumeInfo" positionX="-2" positionY="-72" width="128" height="90"/>
+        <element name="VolumeInfo" positionX="-2" positionY="-72" width="128" height="88"/>
         <element name="ImageStrings" positionX="45" positionY="-90" width="128" height="90"/>
     </elements>
 </model>
