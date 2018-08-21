@@ -2,11 +2,16 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="17G65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Author" representedClassName="Author" syncable="YES" codeGenerationType="class">
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <relationship name="volumes" toMany="YES" deletionRule="Nullify" destinationEntity="Volume" inverseName="authors" inverseEntity="Volume" syncable="YES"/>
+        <relationship name="volumeInfo" toMany="YES" deletionRule="Nullify" destinationEntity="VolumeInfo" inverseName="authors" inverseEntity="VolumeInfo" syncable="YES"/>
     </entity>
     <entity name="Bookshelf" representedClassName="Bookshelf" syncable="YES" codeGenerationType="class">
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="volumes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Volume" inverseName="bookshelves" inverseEntity="Volume" syncable="YES"/>
+    </entity>
+    <entity name="ImageStrings" representedClassName="ImageStrings" syncable="YES" codeGenerationType="class">
+        <attribute name="imageString" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnailString" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="volume" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Volume" inverseName="imageStrings" inverseEntity="Volume" syncable="YES"/>
     </entity>
     <entity name="Review" representedClassName="Review" syncable="YES" codeGenerationType="class">
         <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -15,15 +20,22 @@
     </entity>
     <entity name="Volume" representedClassName="Volume" syncable="YES" codeGenerationType="class">
         <attribute name="summary" attributeType="String" syncable="YES"/>
-        <attribute name="title" attributeType="String" syncable="YES"/>
-        <relationship name="authors" toMany="YES" deletionRule="Nullify" destinationEntity="Author" inverseName="volumes" inverseEntity="Author" syncable="YES"/>
         <relationship name="bookshelves" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Bookshelf" inverseName="volumes" inverseEntity="Bookshelf" syncable="YES"/>
+        <relationship name="imageStrings" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ImageStrings" inverseName="volume" inverseEntity="ImageStrings" syncable="YES"/>
         <relationship name="review" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Review" inverseName="volume" inverseEntity="Review" syncable="YES"/>
+        <relationship name="volumeInfo" maxCount="1" deletionRule="Nullify" destinationEntity="VolumeInfo" inverseName="volume" inverseEntity="VolumeInfo" syncable="YES"/>
+    </entity>
+    <entity name="VolumeInfo" representedClassName="VolumeInfo" syncable="YES" codeGenerationType="class">
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="authors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Author" inverseName="volumeInfo" inverseEntity="Author" syncable="YES"/>
+        <relationship name="volume" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Volume" inverseName="volumeInfo" inverseEntity="Volume" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Bookshelf" positionX="-27" positionY="18" width="128" height="75"/>
-        <element name="Volume" positionX="18" positionY="63" width="128" height="120"/>
-        <element name="Author" positionX="54" positionY="99" width="128" height="75"/>
-        <element name="Review" positionX="18" positionY="81" width="128" height="90"/>
+        <element name="Bookshelf" positionX="252" positionY="-234" width="128" height="73"/>
+        <element name="Volume" positionX="-0" positionY="-261" width="128" height="118"/>
+        <element name="Author" positionX="-0" positionY="107" width="128" height="73"/>
+        <element name="Review" positionX="-180" positionY="-234" width="128" height="90"/>
+        <element name="VolumeInfo" positionX="-2" positionY="-72" width="128" height="90"/>
+        <element name="ImageStrings" positionX="45" positionY="-90" width="128" height="90"/>
     </elements>
 </model>

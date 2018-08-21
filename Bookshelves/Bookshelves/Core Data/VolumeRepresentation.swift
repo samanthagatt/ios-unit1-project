@@ -10,24 +10,21 @@ import Foundation
 
 struct VolumeRepresentation: Decodable, Equatable {
     
-    // struct VolumeInfo may or may not work?
-    let title: VolumeInfo
-    let authors: VolumeInfo
+    let volumeInfo: VolumeInfo
     
     let summary: String
     
-    // May or may not work?
     let imageStrings: ImageStrings
     
     var review: Review?
     
+    struct Review: Decodable, Equatable {
+        var rating: Int16?
+        var string: String?
+    }
+    
     enum CodingKeys: String, CodingKey {
-        
-        // Will this work since the actual title and authors are in the struct VolumeInfo?
-        // Might have to make them optional
-        case title
-        case authors
-        
+        case volumeInfo
         case summary = "description"
         case imageStrings = "imageLinks"
     }
@@ -54,10 +51,35 @@ struct VolumeRepresentation: Decodable, Equatable {
             case imageString = "medium"
         }
     }
-    
-    struct Review: Decodable, Equatable {
-        // does this have to be Int16?
-        var rating: Int?
-        var string: String?
-    }
+}
+
+
+// MARK: - Equatable to core data Volume
+
+func == (lhs: VolumeRepresentation, rhs: Volume) -> Bool {
+    return
+        // Why is it making me force unwrap everything only sometimes???
+        lhs.volumeInfo.title == rhs.volumeInfo?.title &&
+        // Don't think this will work
+        // Need to get an array of all the authors' name variables
+        // Will the authors always be in the same order?
+        // Maybe something like rhs.volumeInfo!.authors.map {$0.name}
+            lhs.volumeInfo.authors == rhs.volumeInfo?.authors?.allObjects as? [String] &&
+            lhs.summary == rhs.summary &&
+            lhs.review?.rating == rhs.review?.rating &&
+            lhs.review?.string == rhs.review?.string &&
+            lhs.imageStrings.thumbnailString == rhs.imageStrings?.thumbnailString &&
+            lhs.imageStrings.imageString == rhs.imageStrings?.imageString
+}
+
+func == (lhs: Volume, rhs: VolumeRepresentation) -> Bool {
+    return rhs == lhs
+}
+
+func != (lhs: VolumeRepresentation, rhs: Volume) -> Bool {
+    return !(rhs == lhs)
+}
+
+func != (lhs: Volume, rhs: VolumeRepresentation) -> Bool {
+    return rhs != lhs
 }
