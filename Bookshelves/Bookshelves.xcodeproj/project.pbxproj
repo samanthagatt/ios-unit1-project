@@ -25,8 +25,9 @@
 		D6337DCE212C92E800F376B7 /* BookshelfController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6337DCD212C92E800F376B7 /* BookshelfController.swift */; };
 		D6337DD2212C9CA200F376B7 /* BookshelvesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6337DD1212C9CA200F376B7 /* BookshelvesTableViewController.swift */; };
 		D6337DD4212C9E7500F376B7 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6337DD3212C9E7500F376B7 /* OnboardingViewController.swift */; };
+		D6337DD6212CA8FA00F376B7 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6337DD5212CA8FA00F376B7 /* Onboarding.storyboard */; };
 		D6989E09212B7527004D3DDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6989E08212B7527004D3DDD /* AppDelegate.swift */; };
-		D6989E0E212B7527004D3DDD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6989E0C212B7527004D3DDD /* Main.storyboard */; };
+		D6989E0E212B7527004D3DDD /* TabBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6989E0C212B7527004D3DDD /* TabBar.storyboard */; };
 		D6989E10212B7529004D3DDD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6989E0F212B7529004D3DDD /* Assets.xcassets */; };
 		D6989E13212B7529004D3DDD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6989E11212B7529004D3DDD /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -63,9 +64,10 @@
 		D6337DCD212C92E800F376B7 /* BookshelfController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookshelfController.swift; sourceTree = "<group>"; };
 		D6337DD1212C9CA200F376B7 /* BookshelvesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookshelvesTableViewController.swift; sourceTree = "<group>"; };
 		D6337DD3212C9E7500F376B7 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		D6337DD5212CA8FA00F376B7 /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		D6989E05212B7527004D3DDD /* Bookshelves.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookshelves.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6989E08212B7527004D3DDD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D6989E0D212B7527004D3DDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D6989E0D212B7527004D3DDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TabBar.storyboard; sourceTree = "<group>"; };
 		D6989E0F212B7529004D3DDD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D6989E12212B7529004D3DDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D6989E14212B7529004D3DDD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -108,7 +110,8 @@
 			isa = PBXGroup;
 			children = (
 				D6989E11212B7529004D3DDD /* LaunchScreen.storyboard */,
-				D6989E0C212B7527004D3DDD /* Main.storyboard */,
+				D6337DD5212CA8FA00F376B7 /* Onboarding.storyboard */,
+				D6989E0C212B7527004D3DDD /* TabBar.storyboard */,
 				D6337DBC212C798600F376B7 /* Bookshelves.storyboard */,
 				D6337DBE212C798F00F376B7 /* Search.storyboard */,
 				D6337DC0212C7DC900F376B7 /* VolumeDetails.storyboard */,
@@ -251,8 +254,9 @@
 				D6337DC3212C832100F376B7 /* EditShelves.storyboard in Resources */,
 				D6989E10212B7529004D3DDD /* Assets.xcassets in Resources */,
 				D6337DBD212C798600F376B7 /* Bookshelves.storyboard in Resources */,
-				D6989E0E212B7527004D3DDD /* Main.storyboard in Resources */,
+				D6989E0E212B7527004D3DDD /* TabBar.storyboard in Resources */,
 				D6337DBF212C798F00F376B7 /* Search.storyboard in Resources */,
+				D6337DD6212CA8FA00F376B7 /* Onboarding.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,12 +285,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		D6989E0C212B7527004D3DDD /* Main.storyboard */ = {
+		D6989E0C212B7527004D3DDD /* TabBar.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				D6989E0D212B7527004D3DDD /* Base */,
 			);
-			name = Main.storyboard;
+			name = TabBar.storyboard;
 			sourceTree = "<group>";
 		};
 		D6989E11212B7529004D3DDD /* LaunchScreen.storyboard */ = {

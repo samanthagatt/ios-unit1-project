@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="is4-hg-Wly">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Onboarding View Controller-->
+        <scene sceneID="Llt-St-8ou">
+            <objects>
+                <viewController id="is4-hg-Wly" customClass="OnboardingViewController" customModule="Bookshelves" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cHX-Q7-5La">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k95-Sh-slM">
+                                <rect key="frame" x="72" y="318" width="231" height="30"/>
+                                <state key="normal" title="Retry Google Books Authorization"/>
+                                <connections>
+                                    <action selector="signIn:" destination="is4-hg-Wly" eventType="touchUpInside" id="HQr-1L-LnU"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="k95-Sh-slM" firstAttribute="centerX" secondItem="cHX-Q7-5La" secondAttribute="centerX" id="AUP-oo-sVF"/>
+                            <constraint firstItem="k95-Sh-slM" firstAttribute="centerY" secondItem="cHX-Q7-5La" secondAttribute="centerY" id="Z3X-Ca-h5X"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="mYJ-JW-bnu"/>
+                    </view>
+                    <connections>
+                        <outlet property="button" destination="k95-Sh-slM" id="ctF-Kf-wsW"/>
+                        <segue destination="pjc-MB-45d" kind="presentation" identifier="PresentTabController" id="Hb2-7W-tiR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8X8-gi-VGB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="122" y="188"/>
+        </scene>
+        <!--TabBar-->
+        <scene sceneID="mUL-MM-RZW">
+            <objects>
+                <viewControllerPlaceholder storyboardName="TabBar" id="pjc-MB-45d" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aQk-xg-aLO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="698" y="188"/>
+        </scene>
+    </scenes>
+</document>

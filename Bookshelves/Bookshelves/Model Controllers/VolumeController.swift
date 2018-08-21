@@ -11,6 +11,11 @@ import CoreData
 
 class VolumeController {
     
+    static let baseURL = "https://www.googleapis.com/books/v1/"
+    
+    // MARK: - Properties
+    
+    
     // MARK: - CRUD
     
     func create(from volumeRep: VolumeRepresentation) {
@@ -38,5 +43,12 @@ class VolumeController {
         if volume.hasRead {
             add(volume: volume, to: "Has read")
         }
+    }
+    
+    
+    // MARK: - API
+    
+    func search(for searchTerm: String, completion: @escaping (Error?) -> Void) {
+        
     }
 }

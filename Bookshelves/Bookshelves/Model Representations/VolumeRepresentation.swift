@@ -44,7 +44,7 @@ struct VolumeRepresentation: Decodable, Equatable {
         let title: String
         let authorsArray: [String]
         
-        lazy var authors: String {
+        var authors: String {
             var scratch = ""
             for author in self.authorsArray {
                 scratch += author
