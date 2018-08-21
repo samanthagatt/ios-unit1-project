@@ -17,11 +17,13 @@ struct VolumeRepresentation: Decodable, Equatable {
     // Won't have summary in search results
     let summary: String?
     
-    // Will every book have image strings?
     // Won't have image strings in search results
     let imageStrings: ImageStrings?
     
     var review: Review?
+    
+    // Have to set hasRead to false before comparing to Volume object since Volume's hasRead will never be nil
+    var hasRead: Bool?
     
     struct Review: Decodable, Equatable {
         var rating: Int16?
@@ -78,7 +80,8 @@ func == (lhs: VolumeRepresentation, rhs: Volume) -> Bool {
             lhs.review?.rating == rhs.review?.rating &&
             lhs.review?.string == rhs.review?.string &&
             lhs.imageStrings?.thumbnailString == rhs.imageStrings?.thumbnailString &&
-            lhs.imageStrings?.imageString == rhs.imageStrings?.imageString
+            lhs.imageStrings?.imageString == rhs.imageStrings?.imageString &&
+            lhs.hasRead == rhs.hasRead
 }
 
 func == (lhs: Volume, rhs: VolumeRepresentation) -> Bool {

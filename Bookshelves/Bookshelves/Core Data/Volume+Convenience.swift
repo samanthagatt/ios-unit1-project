@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 extension Volume {
-    convenience init(id: String, title: String, authors: String, summary: String?, thumbnailString: String?, imageString: String?, context: NSManagedObjectContext) {
+    convenience init(id: String, title: String, authors: String, summary: String?, thumbnailString: String?, imageString: String?, hasRead: Bool = false, context: NSManagedObjectContext) {
         self.init(context: context)
         self.id = id
         self.volumeInfo?.title = title
@@ -18,6 +18,7 @@ extension Volume {
         self.summary = summary
         self.imageStrings?.thumbnailString = thumbnailString
         self.imageStrings?.imageString = imageString
+        self.hasRead = hasRead
         // When it's first being initialized it won't have a review (the user makes that later)
     }
     
