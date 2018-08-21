@@ -6,14 +6,13 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Search-->
         <scene sceneID="LLo-Px-8By">
             <objects>
-                <tableViewController id="0OB-zk-Izv" sceneMemberID="viewController">
+                <tableViewController id="0OB-zk-Izv" customClass="SearchTableViewController" customModule="Bookshelves" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="0wH-Sg-CaG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,7 +59,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="laI-AC-de4" kind="show" identifier="ShowSearchVolumeDetails" id="gDX-4N-6h8"/>
+                                    <segue destination="Lx6-xK-dwS" kind="show" identifier="ShowSearchVolumeDetails" id="D3f-GV-VeP"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -75,57 +74,13 @@
             </objects>
             <point key="canvasLocation" x="694" y="197"/>
         </scene>
-        <!--Volume Title-->
-        <scene sceneID="PqE-fH-6WE">
-            <objects>
-                <viewController id="laI-AC-de4" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Rmc-gg-xGB">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4t8-Lr-F9C">
-                                <rect key="frame" x="16" y="132" width="343" height="470"/>
-                                <connections>
-                                    <segue destination="Lx6-xK-dwS" kind="embed" identifier="EmbedSearchVolumeDetails" id="HfU-nu-BE8"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="4t8-Lr-F9C" firstAttribute="top" secondItem="ofw-nB-aVb" secondAttribute="top" constant="16" id="Shl-ha-8Hu"/>
-                            <constraint firstItem="ofw-nB-aVb" firstAttribute="bottom" secondItem="4t8-Lr-F9C" secondAttribute="bottom" constant="16" id="ecc-KL-DhD"/>
-                            <constraint firstItem="4t8-Lr-F9C" firstAttribute="leading" secondItem="ofw-nB-aVb" secondAttribute="leading" constant="16" id="xuZ-1P-suf"/>
-                            <constraint firstItem="ofw-nB-aVb" firstAttribute="trailing" secondItem="4t8-Lr-F9C" secondAttribute="trailing" constant="16" id="y71-cv-wm2"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="ofw-nB-aVb"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Volume Title" id="wq7-24-s9R">
-                        <barButtonItem key="rightBarButtonItem" title="Edit shelves" id="eHs-Rc-Bba">
-                            <connections>
-                                <segue destination="Hih-TE-VfK" kind="presentation" identifier="PresentEditShelves" id="Xb6-E9-ziM"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Kvm-0U-L9p" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1566" y="197"/>
-        </scene>
-        <!--EditShelves-->
-        <scene sceneID="Dzp-By-ALc">
-            <objects>
-                <viewControllerPlaceholder storyboardName="EditShelves" id="Hih-TE-VfK" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cAP-K0-XC3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2178" y="196"/>
-        </scene>
         <!--VolumeDetails-->
         <scene sceneID="3BK-zz-Aot">
             <objects>
                 <viewControllerPlaceholder storyboardName="VolumeDetails" id="Lx6-xK-dwS" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QOA-yf-K1I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1566" y="661"/>
+            <point key="canvasLocation" x="1386" y="196"/>
         </scene>
         <!--Search-->
         <scene sceneID="qEr-ip-YN1">

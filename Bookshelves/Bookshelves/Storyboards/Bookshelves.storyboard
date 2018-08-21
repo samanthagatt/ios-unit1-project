@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -54,7 +53,7 @@
         <!--Bookshelf Title-->
         <scene sceneID="FnD-QA-l3H">
             <objects>
-                <collectionViewController id="Trc-8s-qmM" sceneMemberID="viewController">
+                <collectionViewController id="Trc-8s-qmM" customClass="BookshelfCollectionViewController" customModule="Bookshelves" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="eoy-zT-IL7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -66,7 +65,7 @@
                             <inset key="sectionInset" minX="16" minY="16" maxX="16" maxY="16"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VolumeCell" id="1t8-l2-KOs">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VolumeCell" id="1t8-l2-KOs" customClass="VolumeCollectionViewCell" customModule="Bookshelves" customModuleProvider="target">
                                 <rect key="frame" x="16" y="16" width="90" height="130"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -103,7 +102,7 @@
                                 </constraints>
                                 <size key="customSize" width="90" height="130"/>
                                 <connections>
-                                    <segue destination="iuC-lk-aiY" kind="show" identifier="ShowVolumeDetails" id="1Mr-Mq-exZ"/>
+                                    <segue destination="dLU-SE-P9B" kind="show" identifier="ShowVolumeDetails" id="VRa-w2-FBf"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -118,57 +117,13 @@
             </objects>
             <point key="canvasLocation" x="984.79999999999995" y="158.77061469265368"/>
         </scene>
-        <!--Volume Title-->
-        <scene sceneID="B7b-aY-WCp">
-            <objects>
-                <viewController id="iuC-lk-aiY" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ce7-E5-Ao9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2ZL-PC-AFT">
-                                <rect key="frame" x="16" y="132" width="343" height="470"/>
-                                <connections>
-                                    <segue destination="dLU-SE-P9B" kind="embed" identifier="EmbedVolumeDetails" id="4yW-T2-9Yh"/>
-                                </connections>
-                            </containerView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="3Ha-hl-tMG" firstAttribute="trailing" secondItem="2ZL-PC-AFT" secondAttribute="trailing" constant="16" id="JeD-gz-ok7"/>
-                            <constraint firstItem="3Ha-hl-tMG" firstAttribute="bottom" secondItem="2ZL-PC-AFT" secondAttribute="bottom" constant="16" id="X2Q-EW-BFh"/>
-                            <constraint firstItem="2ZL-PC-AFT" firstAttribute="leading" secondItem="3Ha-hl-tMG" secondAttribute="leading" constant="16" id="Xok-xo-cOS"/>
-                            <constraint firstItem="2ZL-PC-AFT" firstAttribute="top" secondItem="3Ha-hl-tMG" secondAttribute="top" constant="16" id="YAu-xx-Y0p"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="3Ha-hl-tMG"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Volume Title" id="E9m-fc-wiH">
-                        <barButtonItem key="rightBarButtonItem" title="Edit shelves" id="Zzr-OO-oGW">
-                            <connections>
-                                <segue destination="eeB-c5-xYh" kind="presentation" identifier="PresentEditShelves" id="Esg-Un-KLF"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kP4-xU-eim" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1869.5999999999999" y="161.46926536731635"/>
-        </scene>
-        <!--EditShelves-->
-        <scene sceneID="YbH-AW-eEk">
-            <objects>
-                <viewControllerPlaceholder storyboardName="EditShelves" id="eeB-c5-xYh" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="i55-G8-WBH" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2452" y="161"/>
-        </scene>
         <!--VolumeDetails-->
         <scene sceneID="fkk-tI-rHe">
             <objects>
                 <viewControllerPlaceholder storyboardName="VolumeDetails" id="dLU-SE-P9B" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fia-RZ-pMD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1870" y="626"/>
+            <point key="canvasLocation" x="1569" y="158"/>
         </scene>
         <!--Bookshelves-->
         <scene sceneID="aku-gn-Hcg">
