@@ -11,7 +11,7 @@ import CoreData
 
 class VolumeController {
     
-    static let baseURL = "https://www.googleapis.com/books/v1/"
+    static let baseURL = URL(string: "https://www.googleapis.com/books/v1/volumes")!
     
     // MARK: - Properties
     
@@ -48,7 +48,61 @@ class VolumeController {
     
     // MARK: - API
     
-    func search(for searchTerm: String, completion: @escaping (Error?) -> Void) {
+    // Returns volume representations | doesn't add volumes to core data
+    func search(for searchTerm: String, completion: @escaping ([VolumeRepresentation]?, Error?) -> Void) {
         
+        // Constructs url
+        var urlComponents = URLComponents(url: VolumeController.baseURL, resolvingAgainstBaseURL: true)!
+        let queryItem = URLQueryItem(name: "q", value: searchTerm)
+        urlComponents.queryItems = [queryItem]
+        
+        guard let requestURL = urlComponents.url else {
+            NSLog("Error constructing search for \(searchTerm)")
+            completion(nil, NSError())
+            return
+        }
+        
+        // Creates request
+        var request = URLRequest(url: requestURL)
+        
+        // Adds authorization to request
+        GoogleBooksAuthorizationClient.shared.addAuthorization(to: request) { (authorizedRequest, error) in
+            if let error = error {
+                NSLog("Error adding authorization to URLRequest: \(error)")
+                completion(nil, error)
+                return
+            }
+            
+            guard let authorizedRequest = authorizedRequest else {
+                completion(nil, error)
+                return
+            }
+            
+            request = authorizedRequest
+        }
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            
+            if let error = error {
+                NSLog("Error fetching data: \(error)")
+                completion(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                completion(nil, NSError())
+                return
+            }
+            
+            do {
+                let volumes = try JSONDecoder().decode([VolumeRepresentation].self, from: data)
+                completion(volumes, nil)
+            } catch {
+                NSLog("Error decoding data: \(error)")
+                completion(nil, error)
+                return
+            }
+            
+        }.resume()
     }
 }
