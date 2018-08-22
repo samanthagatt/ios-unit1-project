@@ -92,7 +92,8 @@ class BookshelvesTableViewController: UITableViewController, NSFetchedResultsCon
             guard let indexPath = tableView.indexPathForSelectedRow else { return }
             let bookshelf = fetchedResultsController.object(at: indexPath)
             destinationVC.bookshelf = bookshelf
-            destinationVC.volumeController = VolumeController(shelf: bookshelf)
+            // should it be destinationVC or self??
+            destinationVC.volumeController = VolumeController(shelf: bookshelf, presenter: self)
             destinationVC.title = bookshelf.title
         }
     }

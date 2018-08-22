@@ -13,8 +13,6 @@ class BookshelfCollectionViewController: UICollectionViewController, NSFetchedRe
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "VolumeCell")
     }
     
     
@@ -26,7 +24,7 @@ class BookshelfCollectionViewController: UICollectionViewController, NSFetchedRe
     lazy var fetchedResultsController: NSFetchedResultsController<Volume> = {
         let fetchRequest: NSFetchRequest<Volume> = Volume.fetchRequest()
 
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "volumeInfo.title", ascending: true)]
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataStack.moc, sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
         try! frc.performFetch()
@@ -36,13 +34,13 @@ class BookshelfCollectionViewController: UICollectionViewController, NSFetchedRe
     
     // MARK: - NSFetchedResultsControllerDelegate
     
-//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        collectionView?.reloadData()
-//    }
-//
-//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-//        collectionView?.reloadData()
-//    }
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        collectionView?.reloadData()
+    }
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        collectionView?.reloadData()
+    }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         

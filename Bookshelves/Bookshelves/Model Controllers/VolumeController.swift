@@ -12,17 +12,13 @@ import CoreData
 
 class VolumeController {
     
-    init(shelf: Bookshelf? = nil) {
-        if let shelf = shelf {
-            fetchFromShelf(shelf: shelf)
+    init(shelf: Bookshelf? = nil, presenter: UIViewController? = nil) {
+        if let shelf = shelf, let presenter = presenter {
+            fetchFromShelf(shelf: shelf, presenter: presenter)
         }
     }
     
     static let baseURL = URL(string: "https://www.googleapis.com/books/v1/volumes")!
-    
-    // MARK: - Properties
-    
-//    var volumes: [Volume] = []
     
     
     // MARK: - CRUD
@@ -67,7 +63,7 @@ class VolumeController {
                 try context.save()
             }
             catch {
-                NSLog("Error saving entry: \(error)")
+                NSLog("Error saving volume: \(error)")
             }
         }
     }
@@ -78,7 +74,7 @@ class VolumeController {
         do {
             return try context.fetch(fetchRequest).first
         } catch {
-            NSLog("Error fetching entry with identifier \(id): \(error)")
+            NSLog("Error fetching volume with identifier \(id): \(error)")
             return nil
         }
     }
@@ -163,18 +159,18 @@ class VolumeController {
         }
     }
     
-    func fetchFromShelf(shelf: Bookshelf, completion: @escaping (Error?) -> Void = { _ in }) {
+    func fetchFromShelf(shelf: Bookshelf, presenter: UIViewController, completion: @escaping (Error?) -> Void = { _ in }) {
         
         let requestURL = BookshelfController.baseURL.appendingPathComponent(String(shelf.id)).appendingPathComponent("volumes")
         
         let request = URLRequest(url: requestURL)
         
-//        GoogleBooksAuthorizationClient.shared.authorizeIfNeeded(presenter: presenter) { (error) in
-//            if let error = error {
-//                NSLog("Error getting authorization: \(error)")
-//                completion(error)
-//                return
-//            }
+        GoogleBooksAuthorizationClient.shared.authorizeIfNeeded(presenter: presenter) { (error) in
+            if let error = error {
+                NSLog("Error getting authorization: \(error)")
+                completion(error)
+                return
+            }
         
             GoogleBooksAuthorizationClient.shared.addAuthorization(to: request) { (request, error) in
                 if let error = error {
@@ -213,6 +209,6 @@ class VolumeController {
                     }
                 }.resume()
             }
-//        }
+        }
     }
 }

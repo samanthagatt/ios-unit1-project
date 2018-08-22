@@ -24,7 +24,7 @@
         <relationship name="volumeInfo" maxCount="1" deletionRule="Nullify" destinationEntity="VolumeInfo" inverseName="volume" inverseEntity="VolumeInfo" syncable="YES"/>
     </entity>
     <entity name="VolumeInfo" representedClassName="VolumeInfo" syncable="YES" codeGenerationType="class">
-        <attribute name="authors" attributeType="String" syncable="YES"/>
+        <attribute name="authors" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="imageStrings" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ImageStrings" inverseName="volumeInfo" inverseEntity="ImageStrings" syncable="YES"/>

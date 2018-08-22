@@ -17,11 +17,6 @@ class BookshelfController {
     
     static let baseURL = URL(string: "https://www.googleapis.com/books/v1/mylibrary/bookshelves")!
     
-    // MARK: - Properties
-    
-//    var bookshelves: [Bookshelf] = []
-    
-    
     // MARK: - Persistence
     
     func saveToPersistentStore(context: NSManagedObjectContext) {
@@ -30,18 +25,18 @@ class BookshelfController {
                 try context.save()
             }
             catch {
-                NSLog("Error saving entry: \(error)")
+                NSLog("Error saving bookshelf: \(error)")
             }
         }
     }
     
     func fetchBookshelfFromPersistentStore(id: Int16, context: NSManagedObjectContext) -> Bookshelf? {
         let fetchRequest: NSFetchRequest<Bookshelf> = Bookshelf.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id = %@", id)
+        fetchRequest.predicate = NSPredicate(format: "id == %C", id)
         do {
             return try context.fetch(fetchRequest).first
         } catch {
-            NSLog("Error fetching entry with identifier \(id): \(error)")
+            NSLog("Error fetching bookshelf with identifier \(id): \(error)")
             return nil
         }
     }
@@ -49,13 +44,13 @@ class BookshelfController {
     // Does it need throws??
     func addNewBookshelves(for bookshelfReps: [BookshelfRepresentation], context: NSManagedObjectContext) throws {
         context.performAndWait {
-            // Commented out for testing
-//            for bookshelfRep in bookshelfReps {
-//                let bookshelf = fetchBookshelfFromPersistentStore(id: bookshelfRep.id, context: context)
-//                if let _ = bookshelf { continue } else {
-//                    _ = Bookshelf(bookshelfRep: bookshelfRep, context: context)
-//                }
-//            }
+            // Commented out for testing (duplicates bookshelves every time it's run)
+            for bookshelfRep in bookshelfReps {
+                let bookshelf = fetchBookshelfFromPersistentStore(id: bookshelfRep.id, context: context)
+                if let _ = bookshelf { continue } else {
+                    _ = Bookshelf(bookshelfRep: bookshelfRep, context: context)
+                }
+            }
         }
         saveToPersistentStore(context: context)
     }
