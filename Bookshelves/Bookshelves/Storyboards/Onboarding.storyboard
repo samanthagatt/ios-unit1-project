@@ -19,8 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k95-Sh-slM">
-                                <rect key="frame" x="72" y="318" width="231" height="30"/>
-                                <state key="normal" title="Retry Google Books Authorization"/>
+                                <rect key="frame" x="172.5" y="318" width="30" height="30"/>
                                 <connections>
                                     <action selector="signIn:" destination="is4-hg-Wly" eventType="touchUpInside" id="HQr-1L-LnU"/>
                                 </connections>

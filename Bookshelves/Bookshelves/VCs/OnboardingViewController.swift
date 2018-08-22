@@ -10,14 +10,14 @@ import UIKit
 
 class OnboardingViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // TODO: Fix
-        // Warning: Attempt to present <UINavigationController: 0x10684bc00> on <Bookshelves.OnboardingViewController: 0x105c0da40> whose view is not in the window hierarchy!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
         GoogleBooksAuthorizationClient.shared.authorizeIfNeeded(presenter: self) { (error) in
             if let error = error {
                 NSLog("Error authorizing google books: \(error)")
+                self.button.titleLabel?.text = "Retry Google Books Authorization"
                 return
             }
             self.performSegue(withIdentifier: "PresentTabController", sender: nil)

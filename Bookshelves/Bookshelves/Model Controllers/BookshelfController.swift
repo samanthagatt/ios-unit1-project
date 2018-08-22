@@ -15,8 +15,7 @@ class BookshelfController {
         fetchBookshelves()
     }
     
-    // Keep bookshelves or nah?
-    static let baseURL = URL(string: "https://www.googleapis.com/books/v1/bookshelves")!
+    static let baseURL = URL(string: "https://www.googleapis.com/books/v1/mylibrary/bookshelves")!
     
     // MARK: - Properties
     
@@ -65,12 +64,10 @@ class BookshelfController {
     
     func fetchBookshelves(completion: @escaping (Error?) -> Void = { _ in }) {
         
-//        let requestURL = BookshelfController.baseURL.appendingPathComponent("bookshelves")
         
-        var request = URLRequest(url: BookshelfController.baseURL)
+        let request = URLRequest(url: BookshelfController.baseURL)
         
-        // Hopefully this adds user/userID inbetween v1 and bookshelves
-        GoogleBooksAuthorizationClient.shared.addAuthorization(to: request) { (authenticatedRequest, error) in
+        GoogleBooksAuthorizationClient.shared.addAuthorization(to: request) { (request, error) in
             
             if let error = error {
                 NSLog("Error authorizing request: \(error)")
@@ -78,39 +75,36 @@ class BookshelfController {
                 return
             }
             
-            guard let authenticatedRequest = authenticatedRequest else {
+            guard let request = request else {
                 completion(NSError())
                 return
             }
             
-            request = authenticatedRequest
-            print(request)
+            URLSession.shared.dataTask(with: request) { (data, _, error) in
+                
+                if let error = error {
+                    NSLog("Error performing data task: \(error)")
+                    completion(error)
+                    return
+                }
+                
+                guard let data = data else {
+                    completion(NSError())
+                    return
+                }
+                
+                do {
+                    let bookshelfRepsDict = try JSONDecoder().decode(BookshelfJSONBase.self, from: data)
+                    let bookshelfReps = bookshelfRepsDict.items
+                    let backgroundContext = CoreDataStack.shared.container.newBackgroundContext()
+                    try self.addNewBookshelves(for: bookshelfReps, context: backgroundContext)
+                    completion(nil)
+                } catch {
+                    NSLog("Error decoding data: \(error)")
+                    completion(error)
+                    return
+                }
+            }.resume()
         }
-        
-        URLSession.shared.dataTask(with: request) { (data, _, error) in
-            
-            if let error = error {
-                NSLog("Error performing data task: \(error)")
-                completion(error)
-                return
-            }
-            
-            guard let data = data else {
-                completion(NSError())
-                return
-            }
-            
-            do {
-                let bookshelfRepsDict = try JSONDecoder().decode(BookshelfJSONBase.self, from: data)
-                let bookshelfReps = bookshelfRepsDict.items
-                let backgroundContext = CoreDataStack.shared.container.newBackgroundContext()
-                try self.addNewBookshelves(for: bookshelfReps, context: backgroundContext)
-                completion(nil)
-            } catch {
-                NSLog("Error decoding data: \(error)")
-                completion(error)
-                return
-            }
-        }.resume()
     }
 }
