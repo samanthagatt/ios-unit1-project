@@ -102,6 +102,9 @@
                                 </constraints>
                                 <size key="customSize" width="90" height="130"/>
                                 <connections>
+                                    <outlet property="authorsLabel" destination="hdR-sW-pxc" id="Qw9-tW-s9y"/>
+                                    <outlet property="imageView" destination="sCe-iZ-3a9" id="ugF-rk-hrO"/>
+                                    <outlet property="titleLabel" destination="lwX-sn-dhE" id="wW0-RQ-tvH"/>
                                     <segue destination="dLU-SE-P9B" kind="show" identifier="ShowVolumeDetails" id="VRa-w2-FBf"/>
                                 </connections>
                             </collectionViewCell>

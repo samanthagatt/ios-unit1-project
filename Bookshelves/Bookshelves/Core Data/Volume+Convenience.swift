@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 extension Volume {
-    convenience init(id: String, title: String?, authors: String?, summary: String?, thumbnailString: String?, imageString: String?, hasRead: Bool = false, context: NSManagedObjectContext) {
+    convenience init(id: String, title: String?, authors: String?, summary: String?, thumbnailString: String?, imageString: String?, hasRead: Bool, context: NSManagedObjectContext) {
         self.init(context: context)
         self.id = id
         self.volumeInfo?.title = title
@@ -24,6 +24,6 @@ extension Volume {
     
     convenience init?(volumeRep: VolumeRepresentation, context: NSManagedObjectContext) {
         
-        self.init(id: volumeRep.id, title: volumeRep.volumeInfo.title, authors: volumeRep.volumeInfo.authors, summary: volumeRep.volumeInfo.summary, thumbnailString: volumeRep.volumeInfo.imageStrings?.thumbnailString, imageString: volumeRep.volumeInfo.imageStrings?.imageString, context: context)
+        self.init(id: volumeRep.id, title: volumeRep.volumeInfo.title, authors: volumeRep.volumeInfo.authors, summary: volumeRep.volumeInfo.summary, thumbnailString: volumeRep.volumeInfo.imageStrings?.thumbnailString, imageString: volumeRep.volumeInfo.imageStrings?.imageString, hasRead: false, context: context)
     }
 }

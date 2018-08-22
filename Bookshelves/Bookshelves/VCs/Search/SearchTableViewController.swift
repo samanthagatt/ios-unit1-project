@@ -42,7 +42,7 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         
         self.searchBar.endEditing(true)
         
-        volumeController.search(for: searchTerm) { (volumeReps, error) in
+        volumeController.search(for: searchTerm, presenter: self) { (volumeReps, error) in
             
             if let error = error {
                 NSLog("Error retrieving data: \(error)")

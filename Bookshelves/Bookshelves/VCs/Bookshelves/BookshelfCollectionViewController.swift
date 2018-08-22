@@ -7,88 +7,95 @@
 //
 
 import UIKit
+import CoreData
 
-private let reuseIdentifier = "Cell"
-
-class BookshelfCollectionViewController: UICollectionViewController {
+class BookshelfCollectionViewController: UICollectionViewController, NSFetchedResultsControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "VolumeCell")
+    }
+    
+    
+    // MARK: - Properties
+    
+    var bookshelf: Bookshelf?
+    var volumeController: VolumeController?
+    
+    lazy var fetchedResultsController: NSFetchedResultsController<Volume> = {
+        let fetchRequest: NSFetchRequest<Volume> = Volume.fetchRequest()
 
-        // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataStack.moc, sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
+        try! frc.performFetch()
+        return frc
+    }()
+    
+    
+    // MARK: - NSFetchedResultsControllerDelegate
+    
+//    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//        collectionView?.reloadData()
+//    }
+//
+//    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+//        collectionView?.reloadData()
+//    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        
+        switch type {
+        case .insert:
+            collectionView?.insertSections(IndexSet(integer: sectionIndex))
+        case .delete:
+            collectionView?.deleteSections(IndexSet(integer: sectionIndex))
+        default:
+            break
+        }
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        switch type {
+        case .insert:
+            guard let newIndexPath = newIndexPath else { return }
+            collectionView?.insertItems(at: [newIndexPath])
+        case .delete:
+            guard let indexPath = indexPath else { return }
+            collectionView?.deleteItems(at: [indexPath])
+        case .update:
+            guard let indexPath = indexPath else { return }
+            collectionView?.reloadItems(at: [indexPath])
+        case .move:
+            guard let oldIndexPath = indexPath,
+                let newIndexPath = newIndexPath else { return }
+            collectionView?.deleteItems(at: [oldIndexPath])
+            collectionView?.insertItems(at: [newIndexPath])
+        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
 
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VolumeCell", for: indexPath) as! VolumeCollectionViewCell
+
+        let volume = fetchedResultsController.object(at: indexPath)
+        cell.volume = volume
     
         return cell
     }
 
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
     
-    }
-    */
-
+     // MARK: - Navigation
+     
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+     }
 }

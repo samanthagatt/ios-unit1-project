@@ -19,7 +19,7 @@ class BookshelfController {
     
     // MARK: - Properties
     
-    var bookshelves: [Bookshelf] = []
+//    var bookshelves: [Bookshelf] = []
     
     
     // MARK: - Persistence
