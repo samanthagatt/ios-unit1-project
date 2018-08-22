@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Base: Decodable, Equatable {
+struct VolumeJSONBase: Decodable, Equatable {
     let items: [VolumeRepresentation]
 }
 
@@ -17,7 +17,7 @@ struct VolumeRepresentation: Decodable, Equatable {
     let id: String
     let volumeInfo: VolumeInfo
     var review: Review?
-    // Have to set hasRead to false before comparing to Volume object since Volume's hasRead will never be nil
+    // TODO: Have to set hasRead to false before comparing to Volume object since Volume's hasRead will never be nil
     var hasRead: Bool?
     
     struct Review: Decodable, Equatable {
@@ -85,20 +85,3 @@ func != (lhs: VolumeRepresentation, rhs: Volume) -> Bool {
 func != (lhs: Volume, rhs: VolumeRepresentation) -> Bool {
     return rhs != lhs
 }
-
-
-// MARK: - Volume object outline
-/*
- Volume
-    id
-    volumeInfo
-        title
-        authors
-    summary
-    imageStrings?
-        thumbnailString?
-        imageString?
-    review?
-        rating?
-        string?
- */

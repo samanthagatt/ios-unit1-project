@@ -40,6 +40,8 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
         
         guard let searchTerm = searchBar.text else { return }
         
+        self.searchBar.endEditing(true)
+        
         volumeController.search(for: searchTerm) { (volumeReps, error) in
             
             if let error = error {
@@ -48,10 +50,6 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
             }
             
             self.volumeReps = volumeReps ?? []
-            
-            DispatchQueue.main.async {
-                self.searchBar.endEditing(true)
-            }
         }
     }
     

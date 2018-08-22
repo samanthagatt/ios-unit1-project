@@ -10,12 +10,13 @@ import Foundation
 import CoreData
 
 extension Bookshelf {
-    convenience init(id: Int16, title: String, context: NSManagedObjectContext) {
+    convenience init(id: Int16, title: String, selfLink: String, context: NSManagedObjectContext) {
         self.init(context: context)
         self.id = id
         self.title = title
+        self.selfLink = selfLink
     }
     convenience init?(bookshelfRep: BookshelfRepresentation, context: NSManagedObjectContext) {
-        self.init(id: bookshelfRep.id, title: bookshelfRep.title, context: context)
+        self.init(id: bookshelfRep.id, title: bookshelfRep.title, selfLink: bookshelfRep.selfLink, context: context)
     }
 }

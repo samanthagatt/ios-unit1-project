@@ -96,10 +96,9 @@ class VolumeController {
             }
             
             do {
-                // System group container for systemgroup.com.apple.configurationprofiles path is /private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles
-                let volumeDict = try JSONDecoder().decode(Base.self, from: data)
-                let volumes = volumeDict.items
-                completion(volumes, nil)
+                let volumeRepsDict = try JSONDecoder().decode(VolumeJSONBase.self, from: data)
+                let volumeReps = volumeRepsDict.items
+                completion(volumeReps, nil)
             } catch {
                 NSLog("Error decoding data: \(error)")
                 completion(nil, error)

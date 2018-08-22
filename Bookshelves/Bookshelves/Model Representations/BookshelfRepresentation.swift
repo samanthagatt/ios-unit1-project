@@ -8,9 +8,16 @@
 
 import Foundation
 
+struct BookshelfJSONBase: Decodable, Equatable {
+    let items: [BookshelfRepresentation]
+}
+
 struct BookshelfRepresentation: Decodable, Equatable {
     let id: Int16
     var title: String
+    let selfLink: String
+    
+//    var volumes: [VolumeRepresentation]?
 }
 
 
@@ -19,7 +26,8 @@ struct BookshelfRepresentation: Decodable, Equatable {
 func == (lhs: BookshelfRepresentation, rhs: Bookshelf) -> Bool {
     return
         lhs.id == rhs.id &&
-            lhs.title == rhs.title
+            lhs.title == rhs.title &&
+            lhs.selfLink == rhs.selfLink
 }
 
 func == (lhs: Bookshelf, rhs: BookshelfRepresentation) -> Bool {
