@@ -11,10 +11,12 @@ import CoreData
 
 class VolumeController {
     
-    static let baseURL = URL(string: "https://www.googleapis.com/books/v1/volumes")!
+    static let baseURL = URL(string: "")!
+    static let searchBaseURL = URL(string: "https://www.googleapis.com/books/v1/volumes")!
     
     // MARK: - Properties
     
+    var volumes: [Volume] = []
     
     
     // MARK: - CRUD
@@ -53,7 +55,7 @@ class VolumeController {
     func search(for searchTerm: String, completion: @escaping ([VolumeRepresentation]?, Error?) -> Void) {
         
         // Constructs url
-        var urlComponents = URLComponents(url: VolumeController.baseURL, resolvingAgainstBaseURL: true)!
+        var urlComponents = URLComponents(url: VolumeController.searchBaseURL, resolvingAgainstBaseURL: true)!
         let queryItem = URLQueryItem(name: "q", value: searchTerm)
         urlComponents.queryItems = [queryItem]
         
@@ -64,48 +66,44 @@ class VolumeController {
         }
         
         // Creates request
-        var request = URLRequest(url: requestURL)
+        let request = URLRequest(url: requestURL)
         
         // Adds authorization to request
-        GoogleBooksAuthorizationClient.shared.addAuthorization(to: request) { (authorizedRequest, error) in
+        GoogleBooksAuthorizationClient.shared.addAuthorization(to: request) { (request, error) in
             if let error = error {
                 NSLog("Error adding authorization to URLRequest: \(error)")
                 completion(nil, error)
                 return
             }
             
-            guard let authorizedRequest = authorizedRequest else {
+            guard let request = request else {
                 completion(nil, error)
                 return
             }
             
-            request = authorizedRequest
-            print(request)
+            URLSession.shared.dataTask(with: request) { (data, _, error) in
+                
+                if let error = error {
+                    NSLog("Error fetching data: \(error)")
+                    completion(nil, error)
+                    return
+                }
+                
+                guard let data = data else {
+                    completion(nil, NSError())
+                    return
+                }
+                
+                do {
+                    let volumeRepsDict = try JSONDecoder().decode(VolumeJSONBase.self, from: data)
+                    let volumeReps = volumeRepsDict.items
+                    completion(volumeReps, nil)
+                } catch {
+                    NSLog("Error decoding data: \(error)")
+                    completion(nil, error)
+                    return
+                }
+            }.resume()
         }
-        
-        URLSession.shared.dataTask(with: request) { (data, _, error) in
-            
-            if let error = error {
-                NSLog("Error fetching data: \(error)")
-                completion(nil, error)
-                return
-            }
-            
-            guard let data = data else {
-                completion(nil, NSError())
-                return
-            }
-            
-            do {
-                let volumeRepsDict = try JSONDecoder().decode(VolumeJSONBase.self, from: data)
-                let volumeReps = volumeRepsDict.items
-                completion(volumeReps, nil)
-            } catch {
-                NSLog("Error decoding data: \(error)")
-                completion(nil, error)
-                return
-            }
-            
-        }.resume()
     }
 }

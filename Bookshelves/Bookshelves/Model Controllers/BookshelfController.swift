@@ -49,12 +49,13 @@ class BookshelfController {
     // Does it need throws??
     func addNewBookshelves(for bookshelfReps: [BookshelfRepresentation], context: NSManagedObjectContext) throws {
         context.performAndWait {
-            for bookshelfRep in bookshelfReps {
-                let bookshelf = fetchBookshelfFromPersistentStore(id: bookshelfRep.id, context: context)
-                if let _ = bookshelf { continue } else {
-                    _ = Bookshelf(bookshelfRep: bookshelfRep, context: context)
-                }
-            }
+            // Commented out for testing
+//            for bookshelfRep in bookshelfReps {
+//                let bookshelf = fetchBookshelfFromPersistentStore(id: bookshelfRep.id, context: context)
+//                if let _ = bookshelf { continue } else {
+//                    _ = Bookshelf(bookshelfRep: bookshelfRep, context: context)
+//                }
+//            }
         }
         saveToPersistentStore(context: context)
     }

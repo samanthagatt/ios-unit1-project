@@ -6,15 +6,6 @@
 //  Copyright © 2018 Samantha Gatt. All rights reserved.
 //
 
-
-/*
- 2018-08-22 10:25:59.871570-0400 Bookshelves[13425:6146803] Warning: Attempt to present <UITabBarController: 0x14e830e00> on <Bookshelves.OnboardingViewController: 0x14de0cc00> whose view is not in the window hierarchy!
- 2018-08-22 10:26:00.011211-0400 Bookshelves[13425:6146803] Status bar could not find cached time string image. Rendering in-process.
- 2018-08-22 10:26:00.134950-0400 Bookshelves[13425:6146890] Error decoding data: dataCorrupted(Swift.DecodingError.Context(codingPath: [], debugDescription: "The given data was not valid JSON.", underlyingError: Optional(Error Domain=NSCocoaErrorDomain Code=3840 "JSON text did not start with array or object and option to allow fragments not set." UserInfo={NSDebugDescription=JSON text did not start with array or object and option to allow fragments not set.})))
- https://www.googleapis.com/books/v1/bookshelves
- */
-
-
 import UIKit
 import CoreData
 
