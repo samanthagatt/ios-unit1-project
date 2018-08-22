@@ -14,6 +14,8 @@ struct VolumeJSONBase: Decodable, Equatable {
 
 struct VolumeRepresentation: Decodable, Equatable {
     
+    // Let's just assume the only thing a volume NEEDS is an id (so everything else is optional)
+
     let id: String
     let volumeInfo: VolumeInfo
     var review: Review?
@@ -26,14 +28,16 @@ struct VolumeRepresentation: Decodable, Equatable {
     }
     
     struct VolumeInfo: Decodable, Equatable {
-        let title: String
-        let authorsArray: [String]
-        let summary: String
+        let title: String?
+        let authorsArray: [String]?
+        let summary: String?
         let imageStrings: ImageStrings?
         
-        var authors: String {
+        var authors: String? {
             var scratch = ""
-            for author in self.authorsArray {
+            guard let authorArray = self.authorsArray else { return nil }
+            
+            for author in authorArray {
                 scratch += author
             }
             return scratch

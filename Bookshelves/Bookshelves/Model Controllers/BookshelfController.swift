@@ -48,7 +48,7 @@ class BookshelfController {
     }
     
     // Does it need throws??
-    func addBookshelves(for bookshelfReps: [BookshelfRepresentation], context: NSManagedObjectContext) throws {
+    func addNewBookshelves(for bookshelfReps: [BookshelfRepresentation], context: NSManagedObjectContext) throws {
         context.performAndWait {
             for bookshelfRep in bookshelfReps {
                 let bookshelf = fetchBookshelfFromPersistentStore(id: bookshelfRep.id, context: context)
@@ -104,7 +104,7 @@ class BookshelfController {
                 let bookshelfRepsDict = try JSONDecoder().decode(BookshelfJSONBase.self, from: data)
                 let bookshelfReps = bookshelfRepsDict.items
                 let backgroundContext = CoreDataStack.shared.container.newBackgroundContext()
-                try self.addBookshelves(for: bookshelfReps, context: backgroundContext)
+                try self.addNewBookshelves(for: bookshelfReps, context: backgroundContext)
                 completion(nil)
             } catch {
                 NSLog("Error decoding data: \(error)")
