@@ -42,7 +42,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Swipe to edit" id="UWM-BB-kSX">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="BSO-mI-Fvq"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="BSO-mI-Fvq">
+                            <connections>
+                                <action selector="dismissEditView:" destination="g8u-yd-nfg" id="dJn-HM-vDT"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3u2-Lf-LWi" userLabel="First Responder" sceneMemberID="firstResponder"/>

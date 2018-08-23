@@ -44,16 +44,17 @@ class VolumeDetailViewController: UIViewController {
         titleLabel.text = volume.volumeInfo?.title
         authorsLabel.text = volume.volumeInfo?.authors
         
-//        var bookshelfTitles: [String] = []
-//        if let bookshelves = volume.bookshelves {
-//            for bookshelf in bookshelves {
-//                guard let thisBookshelf = bookshelf as? Bookshelf else { return }
-//                bookshelfTitles.append(thisBookshelf.title!)
-//            }
-//        }
-//
-        // just interpolates an empty array : []
-//        bookshelvesLabel.text = "Bookshelves: \(bookshelfTitles)"
+        var bookshelfTitles: [String] = []
+        if let bookshelves = volume.bookshelves {
+            for bookshelf in bookshelves {
+                // Maybe thisBookshelf is nil?
+                guard let thisBookshelf = bookshelf as? Bookshelf else { return }
+                bookshelfTitles.append(thisBookshelf.title!)
+            }
+        }
+
+        // only returns the current bookshelf
+        bookshelvesLabel.text = "Bookshelves: \(bookshelfTitles)"
         
         // summarys are truncated not full?? (not an issue with the label)
 //        print(volume.volumeInfo?.summary)
@@ -71,6 +72,12 @@ class VolumeDetailViewController: UIViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "ShowVolumeReview" {
+            let destinationVC = segue.destination as! VolumeReviewViewController
+            guard let thisVolume = volume,
+                let volumeTitle = thisVolume.volumeInfo?.title else { return }
+            destinationVC.title = "\(volumeTitle) Review"
+            destinationVC.volume = thisVolume
+        }
     }
 }

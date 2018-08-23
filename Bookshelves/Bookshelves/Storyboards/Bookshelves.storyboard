@@ -75,7 +75,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ClP-ya-NJA">
                                             <rect key="frame" x="0.0" y="0.0" width="90" height="120"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sCe-iZ-3a9">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="noImageAvailable" translatesAutoresizingMaskIntoConstraints="NO" id="sCe-iZ-3a9">
                                                     <rect key="frame" x="0.0" y="0.0" width="90" height="91.5"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwX-sn-dhE">
@@ -147,4 +147,7 @@
             <point key="canvasLocation" x="-814" y="159"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="noImageAvailable" width="140" height="200"/>
+    </resources>
 </document>

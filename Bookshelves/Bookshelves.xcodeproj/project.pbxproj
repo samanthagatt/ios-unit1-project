@@ -31,6 +31,8 @@
 		D6337DDF212CBC3300F376B7 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6337DDE212CBC3300F376B7 /* SearchTableViewController.swift */; };
 		D6337DE1212CBED200F376B7 /* EditShelvesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6337DE0212CBED200F376B7 /* EditShelvesTableViewController.swift */; };
 		D6337DE3212CBF0A00F376B7 /* VolumeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6337DE2212CBF0A00F376B7 /* VolumeCollectionViewCell.swift */; };
+		D6337DE8212EDF3000F376B7 /* VolumeReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6337DE7212EDF3000F376B7 /* VolumeReviewViewController.swift */; };
+		D6337DEA212EDF7400F376B7 /* VolumeReview.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6337DE9212EDF7400F376B7 /* VolumeReview.storyboard */; };
 		D6989E09212B7527004D3DDD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6989E08212B7527004D3DDD /* AppDelegate.swift */; };
 		D6989E0E212B7527004D3DDD /* TabBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6989E0C212B7527004D3DDD /* TabBar.storyboard */; };
 		D6989E10212B7529004D3DDD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D6989E0F212B7529004D3DDD /* Assets.xcassets */; };
@@ -75,6 +77,8 @@
 		D6337DDE212CBC3300F376B7 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		D6337DE0212CBED200F376B7 /* EditShelvesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShelvesTableViewController.swift; sourceTree = "<group>"; };
 		D6337DE2212CBF0A00F376B7 /* VolumeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeCollectionViewCell.swift; sourceTree = "<group>"; };
+		D6337DE7212EDF3000F376B7 /* VolumeReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeReviewViewController.swift; sourceTree = "<group>"; };
+		D6337DE9212EDF7400F376B7 /* VolumeReview.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = VolumeReview.storyboard; sourceTree = "<group>"; };
 		D6989E05212B7527004D3DDD /* Bookshelves.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookshelves.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6989E08212B7527004D3DDD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D6989E0D212B7527004D3DDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TabBar.storyboard; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 				D6337DBC212C798600F376B7 /* Bookshelves.storyboard */,
 				D6337DBE212C798F00F376B7 /* Search.storyboard */,
 				D6337DC0212C7DC900F376B7 /* VolumeDetails.storyboard */,
+				D6337DE9212EDF7400F376B7 /* VolumeReview.storyboard */,
 				D6337DC2212C832100F376B7 /* EditShelves.storyboard */,
 			);
 			path = Storyboards;
@@ -135,6 +140,7 @@
 			children = (
 				D6337DD3212C9E7500F376B7 /* OnboardingViewController.swift */,
 				D6337DD7212CB80800F376B7 /* Bookshelves */,
+				D6337DE4212EDEDC00F376B7 /* Volume */,
 				D6337DD8212CB81B00F376B7 /* Search */,
 			);
 			path = VCs;
@@ -184,6 +190,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		D6337DE4212EDEDC00F376B7 /* Volume */ = {
+			isa = PBXGroup;
+			children = (
+				D6337DDB212CB89200F376B7 /* VolumeDetailViewController.swift */,
+				D6337DE7212EDF3000F376B7 /* VolumeReviewViewController.swift */,
+			);
+			path = Volume;
+			sourceTree = "<group>";
+		};
 		D6989DFC212B7527004D3DDD = {
 			isa = PBXGroup;
 			children = (
@@ -209,7 +224,6 @@
 				D6337DCA212C91FC00F376B7 /* Model Representations */,
 				D6337DC5212C87BB00F376B7 /* Model Controllers */,
 				D6337DB2212C4DA900F376B7 /* VCs */,
-				D6337DDB212CB89200F376B7 /* VolumeDetailViewController.swift */,
 				D6337DDD212CB8BB00F376B7 /* Views */,
 				D6337DB1212C4D6A00F376B7 /* Storyboards */,
 				D6989E0F212B7529004D3DDD /* Assets.xcassets */,
@@ -295,6 +309,7 @@
 				D6337DBD212C798600F376B7 /* Bookshelves.storyboard in Resources */,
 				D6989E0E212B7527004D3DDD /* TabBar.storyboard in Resources */,
 				D6337DBF212C798F00F376B7 /* Search.storyboard in Resources */,
+				D6337DEA212EDF7400F376B7 /* VolumeReview.storyboard in Resources */,
 				D6337DD6212CA8FA00F376B7 /* Onboarding.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -308,6 +323,7 @@
 			files = (
 				D6337DDA212CB85300F376B7 /* BookshelfCollectionViewController.swift in Sources */,
 				D6337DD4212C9E7500F376B7 /* OnboardingViewController.swift in Sources */,
+				D6337DE8212EDF3000F376B7 /* VolumeReviewViewController.swift in Sources */,
 				D6337DA3212B80C100F376B7 /* GoogleBooksAuthorizationClient.swift in Sources */,
 				D6337DCE212C92E800F376B7 /* BookshelfController.swift in Sources */,
 				D6337DB5212C4EBF00F376B7 /* Bookshelves.xcdatamodeld in Sources */,
