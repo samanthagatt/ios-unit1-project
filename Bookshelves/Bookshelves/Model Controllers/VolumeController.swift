@@ -14,7 +14,7 @@ class VolumeController {
     
     init(shelf: Bookshelf? = nil, presenter: UIViewController? = nil) {
         if let shelf = shelf, let presenter = presenter {
-            fetchFromShelf(shelf: shelf, presenter: presenter)
+            fetchFromShelf(bookshelf: shelf, presenter: presenter)
         }
     }
     
@@ -23,19 +23,11 @@ class VolumeController {
     
     // MARK: - CRUD
     
-    func create(from volumeRep: VolumeRepresentation) {
-        
-    }
-    
     func add(volume: Volume, to shelfTitle: String) {
         
     }
     
     func remove(volume: Volume, from shelfTitle: String) {
-        
-    }
-    
-    func updateFromRepresentation(volume: Volume, volumeRep: VolumeRepresentation){
         
     }
     
@@ -79,17 +71,21 @@ class VolumeController {
         }
     }
     
-    func updateVolumes(for volumeReps: [VolumeRepresentation], context: NSManagedObjectContext) throws {
+    func updateVolumes(for volumeReps: [VolumeRepresentation], in bookshelf: Bookshelf, context: NSManagedObjectContext) throws {
         context.performAndWait {
             for volumeRep in volumeReps {
                 let volume = fetchVolumeFromPersistentStore(id: volumeRep.id, context: context)
                 if let volume = volume {
-                    if volume != volumeRep {
-                        self.updateFromRepresentation(volume: volume, volumeRep: volumeRep)
+                    if let bookshelves = volume.bookshelves, bookshelves.contains(bookshelf) {
+                        continue
+                    } else {
+                        volume.addToBookshelves(bookshelf)
                     }
                 } else {
-                    _ = Volume(volumeRep: volumeRep, context: context)
+                    let newVolume = Volume(volumeRep: volumeRep, context: context)
+                    newVolume?.addToBookshelves(bookshelf)
                 }
+                print(volume?.bookshelves?.allObjects)
             }
         }
         saveToPersistentStore(context: context)
@@ -159,9 +155,9 @@ class VolumeController {
         }
     }
     
-    func fetchFromShelf(shelf: Bookshelf, presenter: UIViewController, completion: @escaping (Error?) -> Void = { _ in }) {
+    func fetchFromShelf(bookshelf: Bookshelf, presenter: UIViewController, completion: @escaping (Error?) -> Void = { _ in }) {
         
-        let requestURL = BookshelfController.baseURL.appendingPathComponent(String(shelf.id)).appendingPathComponent("volumes")
+        let requestURL = BookshelfController.baseURL.appendingPathComponent(String(bookshelf.id)).appendingPathComponent("volumes")
         
         let request = URLRequest(url: requestURL)
         
@@ -200,10 +196,11 @@ class VolumeController {
                         let volumeRepsFromJSON = try JSONDecoder().decode(VolumeJSONBase.self, from: data)
                         let volumeReps = volumeRepsFromJSON.items
                         let backgroundContext = CoreDataStack.shared.container.newBackgroundContext()
-                        try self.updateVolumes(for: volumeReps, context: backgroundContext)
+                        try self.updateVolumes(for: volumeReps, in: bookshelf, context: backgroundContext)
                         
                     } catch {
                         NSLog("Error decoding data: \(error)")
+                        print("this is it")
                         completion(error)
                         return
                     }

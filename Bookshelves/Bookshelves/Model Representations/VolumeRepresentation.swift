@@ -21,6 +21,7 @@ struct VolumeRepresentation: Decodable, Equatable {
     var review: Review?
     // TODO: Have to set hasRead to false before comparing to Volume object since Volume's hasRead will never be nil
     var hasRead: Bool?
+    var bookshelves: [BookshelfRepresentation]?
     
     struct Review: Decodable, Equatable {
         var rating: Int16?

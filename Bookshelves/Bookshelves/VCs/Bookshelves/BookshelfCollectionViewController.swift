@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class BookshelfCollectionViewController: UICollectionViewController, NSFetchedResultsControllerDelegate {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -23,7 +23,8 @@ class BookshelfCollectionViewController: UICollectionViewController, NSFetchedRe
     
     lazy var fetchedResultsController: NSFetchedResultsController<Volume> = {
         let fetchRequest: NSFetchRequest<Volume> = Volume.fetchRequest()
-
+        guard let bookshelf = bookshelf else { fatalError("bookshelf is nil") }
+        fetchRequest.predicate = NSPredicate(format: "ANY bookshelves = %@", bookshelf)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "volumeInfo.title", ascending: true)]
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataStack.moc, sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
@@ -34,45 +35,61 @@ class BookshelfCollectionViewController: UICollectionViewController, NSFetchedRe
     
     // MARK: - NSFetchedResultsControllerDelegate
     
+    private var blockOperations: [BlockOperation] = []
+    
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        collectionView?.reloadData()
+        blockOperations.removeAll(keepingCapacity: false)
     }
-
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        collectionView?.reloadData()
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        
+        let op: BlockOperation
+        switch type {
+        case .insert:
+            guard let newIndexPath = newIndexPath else { return }
+            op = BlockOperation { self.collectionView?.insertItems(at: [newIndexPath]) }
+        case .delete:
+            guard let indexPath = indexPath else { return }
+            op = BlockOperation { self.collectionView?.deleteItems(at: [indexPath]) }
+        case .update:
+            guard let indexPath = indexPath else { return }
+            op = BlockOperation { self.collectionView?.reloadItems(at: [indexPath]) }
+        case .move:
+            guard let indexPath = indexPath,  let newIndexPath = newIndexPath else { return }
+            op = BlockOperation { self.collectionView?.moveItem(at: indexPath, to: newIndexPath) }
+        }
+        
+        blockOperations.append(op)
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         
+        var op: BlockOperation?
         switch type {
         case .insert:
-            collectionView?.insertSections(IndexSet(integer: sectionIndex))
+            op = BlockOperation { self.collectionView?.insertSections(IndexSet(integer: sectionIndex)) }
         case .delete:
-            collectionView?.deleteSections(IndexSet(integer: sectionIndex))
+            op = BlockOperation { self.collectionView?.deleteSections(IndexSet(integer: sectionIndex)) }
         default:
             break
         }
+        
+        guard let newOp = op else { return }
+        blockOperations.append(newOp)
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        
-        switch type {
-        case .insert:
-            guard let newIndexPath = newIndexPath else { return }
-            collectionView?.insertItems(at: [newIndexPath])
-        case .delete:
-            guard let indexPath = indexPath else { return }
-            collectionView?.deleteItems(at: [indexPath])
-        case .update:
-            guard let indexPath = indexPath else { return }
-            collectionView?.reloadItems(at: [indexPath])
-        case .move:
-            guard let oldIndexPath = indexPath,
-                let newIndexPath = newIndexPath else { return }
-            collectionView?.deleteItems(at: [oldIndexPath])
-            collectionView?.insertItems(at: [newIndexPath])
-        }
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        collectionView?.performBatchUpdates({
+            self.blockOperations.forEach { $0.start() }
+        }, completion: { finished in
+            self.blockOperations.removeAll(keepingCapacity: false)
+        })
     }
+    
 
 
     // MARK: UICollectionViewDataSource
