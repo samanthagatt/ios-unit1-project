@@ -87,6 +87,7 @@ class BookshelvesTableViewController: UITableViewController, NSFetchedResultsCon
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Slow to switch view controllers sometimes
         if segue.identifier == "ShowBookshelfDetails" {
             let destinationVC = segue.destination as! BookshelfCollectionViewController
             guard let indexPath = tableView.indexPathForSelectedRow else { return }

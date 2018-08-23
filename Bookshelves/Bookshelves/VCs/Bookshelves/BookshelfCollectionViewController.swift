@@ -23,8 +23,10 @@ class BookshelfCollectionViewController: UICollectionViewController, NSFetchedRe
     
     lazy var fetchedResultsController: NSFetchedResultsController<Volume> = {
         let fetchRequest: NSFetchRequest<Volume> = Volume.fetchRequest()
-        guard let bookshelf = bookshelf else { fatalError("bookshelf is nil") }
-        fetchRequest.predicate = NSPredicate(format: "ANY bookshelves = %@", bookshelf)
+//        guard let bookshelf = bookshelf else { fatalError("bookshelf is nil") }
+//        // bookshelf doesn't have any of the volumes
+//        print(bookshelf.volumes?.count)
+//        fetchRequest.predicate = NSPredicate(format: "ANY bookshelves = %@", bookshelf)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "volumeInfo.title", ascending: true)]
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataStack.moc, sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
@@ -111,6 +113,12 @@ class BookshelfCollectionViewController: UICollectionViewController, NSFetchedRe
      // MARK: - Navigation
      
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "ShowVolumeDetails" {
+            let destinationVC = segue.destination as! VolumeDetailViewController
+            guard let indexPath = collectionView?.indexPathsForSelectedItems?.first else { return }
+            let volume = fetchedResultsController.object(at: indexPath)
+            destinationVC.volume = volume
+            destinationVC.title = volume.volumeInfo?.title
+        }
      }
 }

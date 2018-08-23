@@ -79,13 +79,13 @@ class VolumeController {
                     if let bookshelves = volume.bookshelves, bookshelves.contains(bookshelf) {
                         continue
                     } else {
+                        // shouldn't this add the inverse relationship to bookshelf??
                         volume.addToBookshelves(bookshelf)
                     }
                 } else {
                     let newVolume = Volume(volumeRep: volumeRep, context: context)
                     newVolume?.addToBookshelves(bookshelf)
                 }
-                print(volume?.bookshelves?.allObjects)
             }
         }
         saveToPersistentStore(context: context)

@@ -134,7 +134,6 @@
 			isa = PBXGroup;
 			children = (
 				D6337DD3212C9E7500F376B7 /* OnboardingViewController.swift */,
-				D6337DDB212CB89200F376B7 /* VolumeDetailViewController.swift */,
 				D6337DD7212CB80800F376B7 /* Bookshelves */,
 				D6337DD8212CB81B00F376B7 /* Search */,
 			);
@@ -210,6 +209,7 @@
 				D6337DCA212C91FC00F376B7 /* Model Representations */,
 				D6337DC5212C87BB00F376B7 /* Model Controllers */,
 				D6337DB2212C4DA900F376B7 /* VCs */,
+				D6337DDB212CB89200F376B7 /* VolumeDetailViewController.swift */,
 				D6337DDD212CB8BB00F376B7 /* Views */,
 				D6337DB1212C4D6A00F376B7 /* Storyboards */,
 				D6989E0F212B7529004D3DDD /* Assets.xcassets */,
