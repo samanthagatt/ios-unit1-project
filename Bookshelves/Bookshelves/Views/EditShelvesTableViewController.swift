@@ -57,7 +57,7 @@ class EditShelvesTableViewController: UITableViewController, NSFetchedResultsCon
         let bookshelf = fetchedResultsController.object(at: indexPath)
         
         if bookshelf.volumes?.contains(volume) == true {
-            title = "Remove from shelf"
+            let title = "Remove from shelf"
             let removeAction = UIContextualAction(style: .normal, title: title) { (action, view, handler) in
                 self.volumeController.addOrRemove(volume: volume, toOrfrom: bookshelf, method: .remove, context: CoreDataStack.moc, presenter: self)
                 handler(true)
@@ -65,11 +65,12 @@ class EditShelvesTableViewController: UITableViewController, NSFetchedResultsCon
             removeAction.backgroundColor = .red
             return UISwipeActionsConfiguration(actions: [removeAction])
         } else {
-            title = "Add to shelf"
+            let title = "Add to shelf"
             let addAction = UIContextualAction(style: .normal, title: title) { (action, view, handler) in
                 self.volumeController.addOrRemove(volume: volume, toOrfrom: bookshelf, method: .add, context: CoreDataStack.moc, presenter: self)
                 handler(true)
             }
+            addAction.backgroundColor = .green
             return UISwipeActionsConfiguration(actions: [addAction])
         }
     }

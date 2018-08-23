@@ -78,27 +78,44 @@ class VolumeController {
     }
     
     func updateVolumes(for volumeReps: [VolumeRepresentation], in bookshelf: Bookshelf, context: NSManagedObjectContext) throws {
+        
         context.performAndWait {
             
-            // need clarification on the relationship aspect of core data
-            if let volumes = bookshelf.volumes {
-                for volume in volumes {
-                    let thisVolume = volume as! Volume
-                    bookshelf.removeFromVolumes(thisVolume)
+            // Won't delete volumes that were deleted from anywhere but the app when commented out
+//            if let volumes = bookshelf.volumes {
+//                for volume in volumes {
+//                    let thisVolume = volume as! Volume
+//                    bookshelf.removeFromVolumes(thisVolume)
+//                }
+//            }
+            
+            for volumeRep in volumeReps {
+                
+                let volume = fetchVolumeFromPersistentStore(id: volumeRep.id, context: context)
+                
+                if let volume = volume {
+                    
+                    if volume.bookshelves?.contains(bookshelf) == false {
+                        volume.addToBookshelves(bookshelf)
+                    }
+                    
+                } else {
+                    let id = volumeRep.id
+                    self.fetchByID(id: id, context: context) { (volumeRep, error) in
+                        if let error = error {
+                            NSLog("Error fetching by Id \(id): \(error)")
+                            return
+                        }
+                        
+                        guard let volumeRep = volumeRep else { return }
+                        let newVolume = Volume(volumeRep: volumeRep, context: context)
+                        newVolume?.addToBookshelves(bookshelf)
+                    }
                 }
             }
             
-            for volumeRep in volumeReps {
-                let volume = fetchVolumeFromPersistentStore(id: volumeRep.id, context: context)
-                if let volume = volume {
-                        // shouldn't this add the inverse relationship to bookshelf??
-                        volume.addToBookshelves(bookshelf)
-                } else {
-                    let newVolume = Volume(volumeRep: volumeRep, context: context)
-                    newVolume?.addToBookshelves(bookshelf)
-                }
-            }
         }
+        
         saveToPersistentStore(context: context)
     }
     
@@ -235,7 +252,7 @@ class VolumeController {
             .appendingPathComponent(method.rawValue)
         
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)!
-        let queryItem = URLQueryItem(name: "volumeID", value: volume.id)
+        let queryItem = URLQueryItem(name: "volumeId", value: volume.id)
         urlComponents.queryItems = [queryItem]
         
         guard let requestURL = urlComponents.url else {
@@ -266,7 +283,8 @@ class VolumeController {
                     return
                 }
                 
-                URLSession.shared.dataTask(with: request) { (_, _, error) in
+                URLSession.shared.dataTask(with: request) { (_, response, error) in
+                    
                     if let error = error {
                         NSLog("Error performing data task: \(error)")
                         completion(error)
@@ -286,5 +304,34 @@ class VolumeController {
                 }.resume()
             }
         }
+    }
+    
+    func fetchByID(id: String, context: NSManagedObjectContext, completion: @escaping (VolumeRepresentation?, Error?) -> Void) {
+        let requestURL = VolumeController.baseURL.appendingPathComponent(id)
+        
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            
+            if let error = error {
+                NSLog("Error performing data task: \(error)")
+                completion(nil, error)
+                return
+            }
+            
+            guard let data = data else {
+                completion(nil, NSError())
+                return
+            }
+            
+            do {
+                let volumeRep = try JSONDecoder().decode(VolumeRepresentation.self, from: data)
+                completion(volumeRep, nil)
+            } catch {
+                NSLog("Error decoding data: \(error)")
+                print("this is it")
+                completion(nil, error)
+                return
+            }
+            
+        }.resume()
     }
 }
