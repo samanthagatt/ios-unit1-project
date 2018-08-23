@@ -7,26 +7,44 @@
 //
 
 import UIKit
+import CoreData
 
-class EditShelvesTableViewController: UITableViewController {
+class EditShelvesTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
 
+    // MARK: - Properties
+    
+    let bookshelfController = BookshelfController()
+    
+    lazy var fetchedResultsController: NSFetchedResultsController<Bookshelf> = {
+        let fetchRequest: NSFetchRequest<Bookshelf> = Bookshelf.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: CoreDataStack.moc, sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
+        try! frc.performFetch()
+        return frc
+    }()
+    
+    
     // MARK: - Actions
     
     @IBAction func dismissEditView(_ sender: Any) {
         self.parent?.dismiss(animated: true)
     }
     
+    
+    // Shouldn't need the fetched results delegate methods since the table view should never change?
+    
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return fetchedResultsController.fetchedObjects?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "EditBookshelfCell", for: indexPath)
 
-        
+        cell.textLabel?.text = fetchedResultsController.object(at: indexPath).title
 
         return cell
     }
