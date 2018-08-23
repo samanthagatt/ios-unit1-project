@@ -11,6 +11,18 @@ import CoreData
 
 class BookshelvesTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        if willPerformSegue != false {
+            doneButton.isEnabled = false
+            doneButton.tintColor = .clear
+        } else {
+            doneButton.isEnabled = true
+        }
+    }
+    
+    
     // MARK: - Properties
     
     let bookshelfController = BookshelfController()
@@ -23,6 +35,20 @@ class BookshelvesTableViewController: UITableViewController, NSFetchedResultsCon
         try! frc.performFetch()
         return frc
     }()
+    
+    var willPerformSegue: Bool?
+    
+    
+    // MARK: - Outlets
+    
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    
+    
+    // MARK: - Actions
+    
+    @IBAction func dismissEditView(_ sender: Any) {
+        self.parent?.dismiss(animated: true)
+    }
     
     
     // MARK: - NSFetchedResultsControllerDelegate
@@ -66,27 +92,32 @@ class BookshelvesTableViewController: UITableViewController, NSFetchedResultsCon
             tableView.insertRows(at: [newIndexPath], with: .automatic)
         }
     }
-
-
+    
+    
     // MARK: - Table view data source
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
+        return fetchedResultsController.fetchedObjects?.count ?? 0
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BookshelfCell", for: indexPath)
-
-        let bookshelf = fetchedResultsController.object(at: indexPath)
-        cell.textLabel?.text = bookshelf.title
+        
+        cell.textLabel?.text = fetchedResultsController.object(at: indexPath).title
         
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if willPerformSegue == false { return }
+    }
 
+    
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         // Slow to switch view controllers sometimes
         if segue.identifier == "ShowBookshelfDetails" {
             let destinationVC = segue.destination as! BookshelfCollectionViewController

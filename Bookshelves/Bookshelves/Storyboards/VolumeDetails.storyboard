@@ -114,10 +114,10 @@
             </objects>
             <point key="canvasLocation" x="424.80000000000001" y="-88.605697151424295"/>
         </scene>
-        <!--EditShelves-->
+        <!--BookshelvesTVC-->
         <scene sceneID="kTn-LH-fKQ">
             <objects>
-                <viewControllerPlaceholder storyboardName="EditShelves" id="yvW-ij-Jen" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Bookshelves" referencedIdentifier="BookshelvesTVC" id="yvW-ij-Jen" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WC7-Lu-E4g" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1049" y="-110"/>

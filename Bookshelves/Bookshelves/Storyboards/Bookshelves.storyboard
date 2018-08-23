@@ -12,7 +12,7 @@
         <!--Bookshelves-->
         <scene sceneID="5dR-mg-iqc">
             <objects>
-                <tableViewController id="g7l-Be-UB3" customClass="BookshelvesTableViewController" customModule="Bookshelves" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="BookshelvesTVC" id="g7l-Be-UB3" customClass="BookshelvesTableViewController" customModule="Bookshelves" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="L4k-ZJ-s7b">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -44,7 +44,16 @@
                             <outlet property="delegate" destination="g7l-Be-UB3" id="zYM-So-Daq"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Bookshelves" id="enK-zO-dRK"/>
+                    <navigationItem key="navigationItem" title="Bookshelves" id="enK-zO-dRK">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="TVB-CN-KAG">
+                            <connections>
+                                <action selector="dismissEditView:" destination="g7l-Be-UB3" id="Vo3-Tq-jkT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="doneButton" destination="TVB-CN-KAG" id="wl5-L7-EAa"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SOj-sz-cMz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

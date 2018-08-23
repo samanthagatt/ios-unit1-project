@@ -78,6 +78,9 @@ class VolumeDetailViewController: UIViewController {
                 let volumeTitle = thisVolume.volumeInfo?.title else { return }
             destinationVC.title = "\(volumeTitle) Review"
             destinationVC.volume = thisVolume
+        } else if segue.identifier == "PresentEditShelves" {
+            let destinationVC = segue.destination as! BookshelvesTableViewController
+            destinationVC.willPerformSegue = false
         }
     }
 }
