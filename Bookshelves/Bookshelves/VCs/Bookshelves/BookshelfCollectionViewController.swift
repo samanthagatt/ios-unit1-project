@@ -91,7 +91,6 @@ class BookshelfCollectionViewController: UICollectionViewController, NSFetchedRe
             self.blockOperations.removeAll(keepingCapacity: false)
         })
     }
-    
 
 
     // MARK: UICollectionViewDataSource

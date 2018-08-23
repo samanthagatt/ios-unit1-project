@@ -78,6 +78,10 @@ class VolumeDetailViewController: UIViewController {
                 let volumeTitle = thisVolume.volumeInfo?.title else { return }
             destinationVC.title = "\(volumeTitle) Review"
             destinationVC.volume = thisVolume
+        } else if segue.identifier == "PresentEditShelves" {
+            let navVC = segue.destination as! UINavigationController
+            guard let destinationVC = navVC.childViewControllers.first as? EditShelvesTableViewController else { return }
+            destinationVC.volume = volume
         }
     }
 }
