@@ -20,6 +20,10 @@ class VolumeController {
     
     static let baseURL = URL(string: "https://www.googleapis.com/books/v1/volumes")!
     
+    enum APIMethod: String {
+        case add = "addVolume"
+        case remove = "removeVolume"
+    }
     
     // MARK: - CRUD
     
@@ -216,11 +220,16 @@ class VolumeController {
         }
     }
     
-    func add(volume: Volume, to bookshelf: Bookshelf, presenter: UIViewController, completion: @escaping (Error?) -> Void = { _ in }) {
+    func addOrRemove(volume: Volume,
+                     toOrfrom bookshelf: Bookshelf,
+                     method: VolumeController.APIMethod,
+                     context: NSManagedObjectContext,
+                     presenter: UIViewController,
+                     completion: @escaping (Error?) -> Void = { _ in }) {
         
         let url = BookshelfController.baseURL
             .appendingPathComponent(String(bookshelf.id))
-            .appendingPathComponent("addVolume")
+            .appendingPathComponent(method.rawValue)
         
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)!
         let queryItem = URLQueryItem(name: "volumeID", value: volume.id)
@@ -261,13 +270,18 @@ class VolumeController {
                         return
                     }
                     
-                    volume.addToBookshelves(bookshelf)
+                    switch method {
+                    case .add:
+                        volume.addToBookshelves(bookshelf)
+                    case .remove:
+                        volume.removeFromBookshelves(bookshelf)
+                    }
+                    
+                    self.saveToPersistentStore(context: context)
                     completion(nil)
                     
                 }.resume()
             }
         }
     }
-    
-    
 }
