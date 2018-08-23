@@ -72,11 +72,11 @@ func == (lhs: VolumeRepresentation, rhs: Volume) -> Bool {
         lhs.volumeInfo.title == rhs.volumeInfo?.title &&
             lhs.volumeInfo.authors == rhs.volumeInfo?.authors &&
             lhs.volumeInfo.summary == rhs.volumeInfo?.summary &&
-            lhs.review?.rating == rhs.review?.rating &&
-            lhs.review?.string == rhs.review?.string &&
+//            lhs.review?.rating == rhs.review?.rating &&
+//            lhs.review?.string == rhs.review?.string &&
             lhs.volumeInfo.imageStrings?.thumbnailString == rhs.volumeInfo?.imageStrings?.thumbnailString &&
-            lhs.volumeInfo.imageStrings?.imageString == rhs.volumeInfo?.imageStrings?.imageString &&
-            lhs.hasRead == rhs.hasRead
+            lhs.volumeInfo.imageStrings?.imageString == rhs.volumeInfo?.imageStrings?.imageString //&&
+//            lhs.hasRead == rhs.hasRead
 }
 
 func == (lhs: Volume, rhs: VolumeRepresentation) -> Bool {

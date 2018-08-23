@@ -52,6 +52,7 @@ class VolumeDetailViewController: UIViewController {
 //            }
 //        }
 //
+        // just interpolates an empty array : []
 //        bookshelvesLabel.text = "Bookshelves: \(bookshelfTitles)"
         
         // summarys are truncated not full?? (not an issue with the label)

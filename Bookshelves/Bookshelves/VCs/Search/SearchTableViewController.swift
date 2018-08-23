@@ -75,7 +75,14 @@ class SearchTableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == "ShowSearchVolumeDetails" {
+            let destinationVC = segue.destination as! VolumeDetailViewController
+            guard let index = tableView.indexPathForSelectedRow?.row,
+                let volumeRep = volumeReps?[index] else { return }
+            let volume = volumeController.checkForVolume(volumeRep: volumeRep, context: CoreDataStack.moc)
+            destinationVC.volume = volume
+            destinationVC.title = volume?.volumeInfo?.title
+        }
     }
 
     

@@ -23,12 +23,14 @@ class VolumeController {
     
     // MARK: - CRUD
     
-    func add(volume: Volume, to shelfTitle: String) {
-        
-    }
-    
-    func remove(volume: Volume, from shelfTitle: String) {
-        
+    func checkForVolume(volumeRep: VolumeRepresentation, context: NSManagedObjectContext) -> Volume? {
+        let volume = fetchVolumeFromPersistentStore(id: volumeRep.id, context: context)
+        if let volume = volume {
+            return volume
+        } else {
+            let newVolume = Volume(volumeRep: volumeRep, context: context)
+            return newVolume
+        }
     }
     
     func updateRating(for volume: Volume, with int: Int16) {
@@ -42,7 +44,7 @@ class VolumeController {
     func toggleHasRead(for volume: Volume) {
         volume.hasRead = !volume.hasRead
         if volume.hasRead {
-            add(volume: volume, to: "Has read")
+//            add(volume: volume, to: "Has read")
         }
     }
     
@@ -73,6 +75,10 @@ class VolumeController {
     
     func updateVolumes(for volumeReps: [VolumeRepresentation], in bookshelf: Bookshelf, context: NSManagedObjectContext) throws {
         context.performAndWait {
+            // bookshelf.volumes should probably be reset so volumes that aren't fetched don't still have this bookshelf in their volume.bookshelves relationship
+            // need clarification on the relationship aspect of core data
+            // bookshelf.volumes.removeAllObjects()
+            // then you wouldn't need the if let else (just the addToBookshelves in the else clause)
             for volumeRep in volumeReps {
                 let volume = fetchVolumeFromPersistentStore(id: volumeRep.id, context: context)
                 if let volume = volume {
