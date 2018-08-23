@@ -41,10 +41,8 @@ class BookshelfController {
         }
     }
     
-    // Does it need throws??
     func addNewBookshelves(for bookshelfReps: [BookshelfRepresentation], context: NSManagedObjectContext) throws {
         context.performAndWait {
-            // Commented out for testing (duplicates bookshelves every time it's run)
             for bookshelfRep in bookshelfReps {
                 let bookshelf = fetchBookshelfFromPersistentStore(id: bookshelfRep.id, context: context)
                 if let _ = bookshelf { continue } else {

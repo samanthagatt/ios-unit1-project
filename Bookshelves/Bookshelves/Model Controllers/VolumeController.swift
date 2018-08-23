@@ -23,16 +23,6 @@ class VolumeController {
     
     // MARK: - CRUD
     
-    func checkForVolume(volumeRep: VolumeRepresentation, context: NSManagedObjectContext) -> Volume? {
-        let volume = fetchVolumeFromPersistentStore(id: volumeRep.id, context: context)
-        if let volume = volume {
-            return volume
-        } else {
-            let newVolume = Volume(volumeRep: volumeRep, context: context)
-            return newVolume
-        }
-    }
-    
     func updateRating(for volume: Volume, with int: Int16) {
         
     }
@@ -73,21 +63,32 @@ class VolumeController {
         }
     }
     
+    func checkForVolume(volumeRep: VolumeRepresentation, context: NSManagedObjectContext) -> Volume? {
+        let volume = fetchVolumeFromPersistentStore(id: volumeRep.id, context: context)
+        if let volume = volume {
+            return volume
+        } else {
+            let newVolume = Volume(volumeRep: volumeRep, context: context)
+            return newVolume
+        }
+    }
+    
     func updateVolumes(for volumeReps: [VolumeRepresentation], in bookshelf: Bookshelf, context: NSManagedObjectContext) throws {
         context.performAndWait {
-            // bookshelf.volumes should probably be reset so volumes that aren't fetched don't still have this bookshelf in their volume.bookshelves relationship
+            
             // need clarification on the relationship aspect of core data
-            // bookshelf.volumes.removeAllObjects()
-            // then you wouldn't need the if let else (just the addToBookshelves in the else clause)
+            if let volumes = bookshelf.volumes {
+                for volume in volumes {
+                    let thisVolume = volume as! Volume
+                    bookshelf.removeFromVolumes(thisVolume)
+                }
+            }
+            
             for volumeRep in volumeReps {
                 let volume = fetchVolumeFromPersistentStore(id: volumeRep.id, context: context)
                 if let volume = volume {
-                    if let bookshelves = volume.bookshelves, bookshelves.contains(bookshelf) {
-                        continue
-                    } else {
                         // shouldn't this add the inverse relationship to bookshelf??
                         volume.addToBookshelves(bookshelf)
-                    }
                 } else {
                     let newVolume = Volume(volumeRep: volumeRep, context: context)
                     newVolume?.addToBookshelves(bookshelf)
@@ -214,4 +215,59 @@ class VolumeController {
             }
         }
     }
+    
+    func add(volume: Volume, to bookshelf: Bookshelf, presenter: UIViewController, completion: @escaping (Error?) -> Void = { _ in }) {
+        
+        let url = BookshelfController.baseURL
+            .appendingPathComponent(String(bookshelf.id))
+            .appendingPathComponent("addVolume")
+        
+        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)!
+        let queryItem = URLQueryItem(name: "volumeID", value: volume.id)
+        urlComponents.queryItems = [queryItem]
+        
+        guard let requestURL = urlComponents.url else {
+            NSLog("Error constructing url for \(volume.volumeInfo?.title ?? "volume")")
+            completion(NSError())
+            return
+        }
+        
+        var request = URLRequest(url: requestURL)
+        request.httpMethod = "POST"
+        
+        GoogleBooksAuthorizationClient.shared.authorizeIfNeeded(presenter: presenter) { (error) in
+            if let error = error {
+                NSLog("Error getting authorization: \(error)")
+                completion(error)
+                return
+            }
+            
+            GoogleBooksAuthorizationClient.shared.addAuthorization(to: request) { (request, error) in
+                if let error = error {
+                    NSLog("Error adding authorization to request: \(error)")
+                    completion(error)
+                    return
+                }
+                
+                guard let request = request else {
+                    completion(NSError())
+                    return
+                }
+                
+                URLSession.shared.dataTask(with: request) { (_, _, error) in
+                    if let error = error {
+                        NSLog("Error performing data task: \(error)")
+                        completion(error)
+                        return
+                    }
+                    
+                    volume.addToBookshelves(bookshelf)
+                    completion(nil)
+                    
+                }.resume()
+            }
+        }
+    }
+    
+    
 }

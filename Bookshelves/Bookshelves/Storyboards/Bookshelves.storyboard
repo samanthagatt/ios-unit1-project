@@ -114,7 +114,9 @@
                             <outlet property="delegate" destination="Trc-8s-qmM" id="VjY-PZ-ewL"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Bookshelf Title" id="2Yv-Nf-EBx"/>
+                    <navigationItem key="navigationItem" title="Bookshelf Title" id="2Yv-Nf-EBx">
+                        <barButtonItem key="rightBarButtonItem" title="Clear all volumes" id="Rt4-h0-gbI"/>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="crg-m9-VxJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

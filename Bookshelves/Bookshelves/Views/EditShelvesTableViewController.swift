@@ -13,8 +13,7 @@ class EditShelvesTableViewController: UITableViewController {
     // MARK: - Actions
     
     @IBAction func dismissEditView(_ sender: Any) {
-        // The presenting view controller is responsible for dismissing the view controller it presented. If you call this method on the presented view controller itself, UIKit asks the presenting view controller to handle the dismissal.
-        dismiss(animated: true)
+        self.parent?.dismiss(animated: true)
     }
     
 
